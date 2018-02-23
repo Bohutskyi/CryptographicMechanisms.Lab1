@@ -7,6 +7,8 @@ public class LongNumber {
 
     private ArrayList<Integer> array;
 
+    public LongNumber() {}
+
     /**
      * Constructor
      * Create new LongNumber with specified size
@@ -111,8 +113,8 @@ public class LongNumber {
      * Prints this LongNumber.
      */
     public void print() {
-        for (int i = 0; i < this.array.size(); i++) {
-            System.out.print(array.get(i) + " ");
+        for (Integer element : this.array) {
+            System.out.print(element + " ");
         }
         System.out.println();
     }
@@ -157,39 +159,55 @@ public class LongNumber {
      */
     public String toBinaryString() {
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < array.size(); i++) {
-            switch (array.get(i)) {
-                case 0: s.append("0000");
+        for (Integer element : array) {
+            switch (element) {
+                case 0:
+                    s.append("0000");
                     break;
-                case 1: s.append("0001");
+                case 1:
+                    s.append("0001");
                     break;
-                case 2: s.append("0010");
+                case 2:
+                    s.append("0010");
                     break;
-                case 3: s.append("0011");
+                case 3:
+                    s.append("0011");
                     break;
-                case 4: s.append("0100");
+                case 4:
+                    s.append("0100");
                     break;
-                case 5: s.append("0101");
+                case 5:
+                    s.append("0101");
                     break;
-                case 6: s.append("0110");
+                case 6:
+                    s.append("0110");
                     break;
-                case 7: s.append("0111");
+                case 7:
+                    s.append("0111");
                     break;
-                case 8: s.append("1000");
+                case 8:
+                    s.append("1000");
                     break;
-                case 9: s.append("1001");
+                case 9:
+                    s.append("1001");
                     break;
-                case 10 : s.append("1010");
+                case 10:
+                    s.append("1010");
                     break;
-                case 11 : s.append("1011");
+                case 11:
+                    s.append("1011");
                     break;
-                case 12 : s.append("1100");
+                case 12:
+                    s.append("1100");
                     break;
-                case 13 : s.append("1101");
+                case 13:
+                    s.append("1101");
                     break;
-                case 14 : s.append("1110");
+                case 14:
+                    s.append("1110");
                     break;
-                case 15: s.append("1111");
+                case 15:
+                    s.append("1111");
                     break;
             }
         }

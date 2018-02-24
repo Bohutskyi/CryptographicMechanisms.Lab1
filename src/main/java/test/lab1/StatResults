@@ -1,0 +1,36 @@
+Benchmark                        Mode    Cnt      Score      Error   Units
+
+---------------------------------------------------------------------------
+
+BenchmarksLab1.addBigIntegers   thrpt      5   4473,951 ±   33,536  ops/ms
+BenchmarksLab1.addLongNumbers   thrpt      5    133,194 ±    1,431  ops/ms
+
+BenchmarksLab1.divBigIntegers   thrpt      5   9636,783 ± 1238,253  ops/ms
+BenchmarksLab1.divLongNumbers   thrpt      5      0,477 ±    0,203  ops/ms
+
+BenchmarksLab1.mulBigIntegers   thrpt      5  20786,098 ± 1039,603  ops/ms
+BenchmarksLab1.mulLongNumbers   thrpt      5      0,034 ±    0,007  ops/ms
+
+BenchmarksLab1.subBigIntegers   thrpt      5  19932,021 ± 1426,065  ops/ms
+BenchmarksLab1.subLongNumbers   thrpt      5    109,426 ±   10,121  ops/ms
+
+---------------------------------------------------------------------------
+
+BenchmarksLab1.addBigIntegers  sample  54125     ≈ 10⁻³              ms/op
+BenchmarksLab1.addLongNumbers  sample  70424      0,009 ±    0,001   ms/op
+
+BenchmarksLab1.divBigIntegers  sample  88263     ≈ 10⁻⁴              ms/op
+BenchmarksLab1.divLongNumbers  sample   2430      2,055 ±    0,026   ms/op
+
+BenchmarksLab1.mulBigIntegers  sample  87306     ≈ 10⁻⁴              ms/op
+BenchmarksLab1.mulLongNumbers  sample    161     31,487 ±    0,508   ms/op
+
+BenchmarksLab1.subBigIntegers  sample  88852     ≈ 10⁻⁴              ms/op
+BenchmarksLab1.subLongNumbers  sample  60026      0,010 ±    0,001   ms/op
+
+---------------------------------------------------------------------------
+
+* All results are printed in MILLISECONDS
+
+* Throughput("thrpt")   - Measures the number of operations per second, meaning the number of times per second your benchmark method could be executed.
+* Sample Time("sample") - Measures how long time it takes for the benchmark method to execute, including max, min time etc.

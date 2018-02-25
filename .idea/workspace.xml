@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da7f259f-b06b-4de8-ad6c-85daa4ee5b03" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/lab1/LongNumber.class" afterPath="$PROJECT_DIR$/target/classes/lab1/LongNumber.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/lab1/test/Test.class" afterPath="$PROJECT_DIR$/target/classes/lab1/test/Test.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/lab1/LongNumber.java" afterPath="$PROJECT_DIR$/src/main/java/lab1/LongNumber.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/lab1/test/Test.java" afterPath="$PROJECT_DIR$/src/main/java/lab1/test/Test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/lab2/Main.java" afterPath="$PROJECT_DIR$/src/main/java/lab2/Main.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -21,8 +23,8 @@
       <file leaf-file-name="Test.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/lab1/test/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="104" column="13" lean-forward="true" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
+            <state relative-caret-position="252">
+              <caret line="110" column="0" lean-forward="true" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -33,8 +35,8 @@
       <file leaf-file-name="LongNumber.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/lab1/LongNumber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="557" column="9" lean-forward="true" selection-start-line="557" selection-start-column="9" selection-end-line="557" selection-end-column="9" />
+            <state relative-caret-position="197">
+              <caret line="55" column="59" lean-forward="true" selection-start-line="55" selection-start-column="59" selection-end-line="55" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,6 +64,8 @@
       <find>3823a739732e4c5c39a964009f44ff8ef05301b70d34d59c9c91977fb8c38626c7f00eabab9f33cf52ac335ac0692b9682f559262c9c36e7cd1fea15765fd6cea686d9d90a5ee5138b154443161d412c1796d7cf60a245411c005977d9a051f4f3e5afad0cba503543e410e700df8945fdd5483511ddd37d0f5ce3ed93ee4575355582ac781624f533861ac5a9505708e2a1394f9547764fa73cda71b233e04e3f631bc0587bf05e9d87cfd1ccc5da0667cf3ccfb6b9c95ed1f8bb0ae56404679b32cf057695518d93c793da365ddeaf744fb9ea7b84004406c076258b6029844c5740c3817c76c26dd5412ebb3a05e016d16e13f6c6072070dd7fa74a31a4e4498e9fd848879bc2211097c7e773b842072ba019f9b4c845c6e83f837c39b0774443893dc4484d72b74def822e65d8e50b2dd00910db7158000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</find>
       <find>GCD</find>
       <find>DD1D6BAF71812E4CDE4C69151CC686C13CC63C68</find>
+      <find>getM</find>
+      <find>31544871b97e76103158</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,12 +103,12 @@
         <option value="$PROJECT_DIR$/src/main/java/lab2/generators/WolframGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/generators/JiffyGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/generators/BMGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/lab1/LongNumber.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/generators/BBSGeneratorByBytes.java" />
         <option value="$PROJECT_DIR$/src/main/java/additional/Mathematics.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/generators/BMBytesGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/MillerRabinTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/lab1/LongNumber.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab1/test/Test.java" />
       </list>
     </option>
@@ -837,12 +841,12 @@
       <workItem from="1518980914745" duration="345000" />
       <workItem from="1519153989082" duration="551000" />
       <workItem from="1519154774298" duration="3485000" />
-      <workItem from="1519545471693" duration="14938000" />
+      <workItem from="1519545471693" duration="16809000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23586000" />
+    <option name="totallyTimeSpent" value="25457000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -1387,8 +1391,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/lab1/LongNumber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="557" column="9" lean-forward="true" selection-start-line="557" selection-start-column="9" selection-end-line="557" selection-end-column="9" />
+        <state relative-caret-position="197">
+          <caret line="55" column="59" lean-forward="true" selection-start-line="55" selection-start-column="59" selection-end-line="55" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1397,8 +1401,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/lab1/test/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="104" column="13" lean-forward="true" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
+        <state relative-caret-position="252">
+          <caret line="110" column="0" lean-forward="true" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -103,19 +103,28 @@ public class Test {
 
 
         //pow
-        LongNumber t1 = new LongNumber(5);
-        LongNumber t2 = new LongNumber(3);
-        t1.setRandomValues();
-        t2.setRandomValues();
+        LongNumber third = new LongNumber(20);
 
-        System.out.println(t1.hex());
-        System.out.println(t2.hex());
+        first.setRandomValues();
+        second.setRandomValues();
+        third.setRandomValues();
 
-        System.out.println(LongNumber.LongPower1(t1, t2).hex());
+        System.out.println(first.hex());
+        System.out.println(second.hex());
+        System.out.println(third.hex());
 
-        test1 = new BigInteger(t1.hex(), 16);
+        try {
+            System.out.println(LongNumber.LongModPowerBarrett(first, second, third).hex());
+        } catch (SubtractionException e) {
+            System.out.println(e.getMessage());
+        }
 
-        System.out.println(test1.pow(Integer.parseInt(t2.hex(), 16)).toString(16));
+        test1 = new BigInteger(first.hex(), 16);
+        test2 = new BigInteger(second.hex(), 16);
+        BigInteger test3 = new BigInteger(third.hex(), 16);
+        System.out.println(test1.modPow(test2, test3).toString(16));
+
+//        System.out.println(test1.pow(Integer.parseInt(t2.hex(), 16)).toString(16));
     }
 
 }

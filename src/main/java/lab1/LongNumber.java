@@ -53,7 +53,7 @@ public class LongNumber {
     public LongNumber(String [] array) {
         this.array = new ArrayList<>();
         for (int i = 0; i < array.length; i++) {
-            this.array.add(i);
+            this.array.add(Integer.parseInt(array[i], 16));
         }
     }
 
@@ -743,6 +743,7 @@ public class LongNumber {
         if (q.array.size() == 0) {
             q.array.add(0);
         }
+
         q = LongNumber.LongMul(q, m);
         q = LongNumber.KillLastDigits(q, k + 1);
 

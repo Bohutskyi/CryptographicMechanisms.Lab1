@@ -86,32 +86,36 @@ public class Test {
             System.out.println(test1.gcd(test2).toString(16));
         }
 
-        first.setRandomValues();
-        System.out.println(first.hex());
-        first = LongNumber.KillLastDigits(first, 5);
-        System.out.println(first.hex());
-        /*
-        //mod
-        System.out.println("---------Pow Mod-----------");
-        LongNumber third = new LongNumber(20);
-        third.setRandomValues();
-        first.setRandomValues();
+        /*first.setRandomValues();
+        second = new LongNumber(10);
         second.setRandomValues();
-
         System.out.println(first.hex());
         System.out.println(second.hex());
-        System.out.println(third.hex());
-
         try {
-            System.out.println(LongNumber.LongModPowerBarrett(first, second, third).hex());
-        } catch (SubtractionException e) {
+            System.out.println(LongNumber.BarrettReduction(first, second, LongNumber.getM(second)).hex());
+        } catch (SubtractionException e ) {
             System.out.println(e.getMessage());
         }
 
         test1 = new BigInteger(first.hex(), 16);
         test2 = new BigInteger(second.hex(), 16);
-        BigInteger test3 = new BigInteger(third.hex(), 16);
-        System.out.println(test1.modPow(test2, test3));*/
+        System.out.println(test1.mod(test2).toString(16));*/
+
+
+        //pow
+        LongNumber t1 = new LongNumber(5);
+        LongNumber t2 = new LongNumber(3);
+        t1.setRandomValues();
+        t2.setRandomValues();
+
+        System.out.println(t1.hex());
+        System.out.println(t2.hex());
+
+        System.out.println(LongNumber.LongPower1(t1, t2).hex());
+
+        test1 = new BigInteger(t1.hex(), 16);
+
+        System.out.println(test1.pow(Integer.parseInt(t2.hex(), 16)).toString(16));
     }
 
 }

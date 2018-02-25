@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Main {
 
-    private static final String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+    private static final String[] data = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
     public static void main(String[] args) {
         BigInteger temp = generatePrime(100);
@@ -17,7 +17,7 @@ public class Main {
         StringBuilder temp = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; ++i) {
-            temp.append(data[random.nextInt(15)]);
+            temp.append(data[random.nextInt(16)]);
         }
         return new BigInteger(temp.toString(), 16);
     }

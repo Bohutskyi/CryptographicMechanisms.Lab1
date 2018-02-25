@@ -1,81 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da7f259f-b06b-4de8-ad6c-85daa4ee5b03" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/Theory/AsCrypto_CP1.2016.pdf" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Theory/SpRzOM CP1-2015.pdf" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Theory/SpRzOM CP2-2015.pdf" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Theory/SpRzOM_CP1-2013.pdf" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Theory/Протокол.docx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/additional/ColorText.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/additional/GCD.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/additional/Mathematics.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab1/SubtractionException.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/CONST.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/Main.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/MillerRabinTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/conversion/Conversion.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/criterion/Test1.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/criterion/Test2.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/criterion/Test3.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/BBSGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/BBSGeneratorByBytes.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/BMBytesGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/BMGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/Generator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/JavaGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/JavaSecureGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/JiffyGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/L20Generator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/L89Generator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/LehmerHighGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/LehmerLowGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/LibraryGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/lab2/generators/WolframGenerator.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/additional/ColorText$ColorBase.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/additional/ColorText.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/additional/GCD.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/additional/Mathematics.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab1/SubtractionException.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/CONST.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/Main.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/MillerRabinTest$BIGINTEGERCONST.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/MillerRabinTest.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/conversion/Conversion.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/criterion/Test1.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/criterion/Test2.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/criterion/Test3.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/BBSGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/BBSGeneratorByBytes.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/BMBytesGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/BMGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/Generator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/JavaGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/JavaSecureGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/JiffyGenerator$1.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/JiffyGenerator$LinearFeedbackShiftRegister1.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/JiffyGenerator$LinearFeedbackShiftRegister2.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/JiffyGenerator$LinearFeedbackShiftRegister3.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/JiffyGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/L20Generator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/L89Generator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/LehmerHighGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/LehmerLowGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/LibraryGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/target/classes/lab2/generators/WolframGenerator.class" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/temp" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lab1/LongNumber.java" afterPath="$PROJECT_DIR$/src/main/java/lab1/LongNumber.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/lab1/AppLab1.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/lab1/BenchmarksLab1.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/lab1/StatResults" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lab1/LongNumber.class" afterPath="$PROJECT_DIR$/target/classes/lab1/LongNumber.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lab1/test/Test.class" afterPath="$PROJECT_DIR$/target/classes/lab1/test/Test.class" />
-      <change beforePath="$PROJECT_DIR$/target/labs-1.1-SNAPSHOT-jar-with-dependencies.jar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/labs-1.1-SNAPSHOT.jar" afterPath="" />
-    </list>
+    <list default="true" id="da7f259f-b06b-4de8-ad6c-85daa4ee5b03" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1002,12 +928,12 @@
       <workItem from="1519154774298" duration="3485000" />
       <workItem from="1519545471693" duration="16809000" />
       <workItem from="1519581726684" duration="6709000" />
-      <workItem from="1519588746612" duration="1252000" />
+      <workItem from="1519588746612" duration="1521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33418000" />
+    <option name="totallyTimeSpent" value="33687000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">

@@ -1,6 +1,7 @@
 package lab1.test;
 
 import lab1.LongNumber;
+import lab1.SubtractionException;
 
 import java.math.BigInteger;
 
@@ -33,7 +34,16 @@ public class Test {
         System.out.println(first.hex());
         System.out.println(second.hex());
 
-        System.out.println(LongNumber.LongSub(first, second).getLongNumber().hex());
+        try {
+            System.out.println(LongNumber.LongSub(first, second).getLongNumber().hex());
+        } catch (SubtractionException e) {
+            System.out.println(e.getMessage());
+            try {
+                System.out.println(LongNumber.LongSub(second, first).getLongNumber().hex());
+            } catch (SubtractionException e1) {
+
+            }
+        }
 
         test1 = new BigInteger(first.hex(), 16);
         test2 = new BigInteger(second.hex(), 16);

@@ -1,11 +1,14 @@
 package lab2.generators;
 
+import additional.Mathematics;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 
 /**
  * генератор BM_bytes (байтова модифікація генератору Блюма-Мікалі)
+ * and here add:)
  */
 public class BMBytesGenerator extends BMGenerator {
 
@@ -15,7 +18,31 @@ public class BMBytesGenerator extends BMGenerator {
         super(startValue);
     }
 
-    public void toFile(String fileName, int startValue, int byteLength) {
+    public BMBytesGenerator() {
+        super();
+    }
+
+    @Override
+    public int getNext() {
+        T0 = power(a, T0, p);
+        T0 = T0.multiply(new BigInteger("256", 10)).divide(p.subtract(BigInteger.ONE));
+        return T0.intValue();
+    }
+
+    @Override
+    public void toFile(String fileName, int length) {
+        try {
+            FileWriter writer = new FileWriter(fileName);
+            for (int i = 0; i < length; i++) {
+                writer.write(Mathematics.getBinary(getNext()));
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /*public void toFile(String fileName, int startValue, int byteLength) {
         T0 = new BigInteger(Integer.toString(startValue));
         try {
             FileWriter writer = new FileWriter(fileName);
@@ -36,6 +63,6 @@ public class BMBytesGenerator extends BMGenerator {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    }
+    }*/
 
 }

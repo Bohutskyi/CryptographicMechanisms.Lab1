@@ -1,30 +1,20 @@
 package lab2.generators;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Random;
 
 /**
- * 1. Вбудований генератор псевдовипадкових чисел Java
- * 1. Build-in pseudo-random number Java generator
- *
- * Also need to add SecureRandom
+ * 1. Build-in pseudo-random number Java generator.
  */
+public class JavaGenerator extends Generator {
 
-public class JavaGenerator {
+    private Random random;
 
-    public static void toFile(String fileName, int length) {
-        try {
-            FileWriter writer = new FileWriter(fileName);
-            Random random = new Random();
-            for (int i = 0; i < length; i++) {
-                writer.write(Integer.toString(random.nextInt(2)));
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public JavaGenerator() {
+        this.random = new Random();
     }
 
-
+    @Override
+        public int getNext() {
+        return random.nextInt(2);
+    }
 }

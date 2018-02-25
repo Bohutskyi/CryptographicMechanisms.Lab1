@@ -1,36 +1,31 @@
 package lab2.generators;
 
+import additional.Mathematics;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.Random;
 
 /**
- * 9.
+ * 9.2. Generator BBS - Blum Blum Shub.
+ * Bytes implementation.
+ *
+ * Everything is same as in BBS, but xi = ri mod 256.
  */
 public class BBSGeneratorByBytes extends BBSGenerator {
 
-    protected static void nextIteration() {
+    @Override
+    public int getNext() {
         r0 = (r0.multiply(r0)).mod(n);
-        x = r0.mod(new BigInteger("256", 10));
+        x = r0.mod(new BigInteger("256", 10)).intValue();
+        return x;
     }
 
-    public static void toFile(String fileName, int length) {
+    @Override
+    public void toFile(String fileName, int length) {
         try {
             FileWriter writer = new FileWriter(fileName);
-            int count = 0;
-            Random random = new Random();
             for (int i = 0; i < length; i++) {
-                nextIteration();
-                StringBuilder temp = new StringBuilder(x.toString(2));
-                while (temp.length() < 8) {
-                    temp.insert(0, "0");
-                }
-                writer.write(temp.substring(temp.length() - 8));
-                count += 8;
-                if (count > length) {
-                    break;
-                }
+                writer.write(Mathematics.getBinary(getNext()));
             }
             writer.close();
         } catch (IOException e) {

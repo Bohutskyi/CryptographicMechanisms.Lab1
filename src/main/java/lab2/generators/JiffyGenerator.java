@@ -1,26 +1,24 @@
 package lab2.generators;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Random;
 
 /**
- * 5. Генератор Джиффі - – потоковий шифр, що генерує шифруючу гаму за рахунок нелінійної комбінації трьох
- * лінійних регістрів зсуву.
- * Регістр L11: x11 = x0 + x2;
- * Регістр L9: y9 = y0 + y1 + y3 + y4;
- * Регістр L10: s10 = s0 + s3.
- * Вихідна послідовність бітів обчислюється за правилом z(i) = si * xi + (1 + si) yi
- * */
-public class GeffeGenerator {
-
-//    private static Random random = new Random();
+ * 5. Generator Jiffy.
+ * Register L11: x11 = x0 + x2;
+ * Register L9: y9 = y0 + y1 + y3 + y4;
+ * Register L10: s10 = s0 + s3.
+ *
+ * Output sequence {zi} z(i) = si * xi + (1 + si) yi.
+ *
+ * Start register's values sets randomly, but not equivalent zero.
+ */
+public class JiffyGenerator extends Generator {
 
     private class LinearFeedbackShiftRegister1 {
-        private int vector;//' = random.nextInt();
+        private int vector;
         private static final int n = 11;
 
-        public void setVector(int vector) {
+        void setVector(int vector) {
             this.vector = vector;
         }
 
@@ -28,11 +26,11 @@ public class GeffeGenerator {
             return vector;
         }
 
-        public int getCurrentBit() {
+        int getCurrentBit() {
             return vector & 1;
         }
 
-        public int getNext() {
+        int getNext() {
             int temp = ((vector >> 2) & 1) ^ ((vector) & 1);
             temp = temp & 1;
             vector = vector >> 1;
@@ -42,10 +40,10 @@ public class GeffeGenerator {
     }
 
     private class LinearFeedbackShiftRegister2 {
-        private int vector;// = random.nextInt();
+        private int vector;
         private static final int n = 9;
 
-        public void setVector(int vector) {
+        void setVector(int vector) {
             this.vector = vector;
         }
 
@@ -53,11 +51,11 @@ public class GeffeGenerator {
             return vector;
         }
 
-        public int getCurrentBit() {
+        int getCurrentBit() {
             return vector & 1;
         }
 
-        public long getNext() {
+        long getNext() {
             int temp = ((vector >> 4) & 1) ^ ((vector >> 3) & 1) ^ ((vector >> 1) & 1) ^ ((vector) & 1);
             temp = temp & 1;
             vector = vector >> 1;
@@ -67,10 +65,10 @@ public class GeffeGenerator {
     }
 
     private class LinearFeedbackShiftRegister3 {
-        private int vector;// = random.nextInt();
+        private int vector;
         private static final int n = 10;
 
-        public void setVector(int vector) {
+        void setVector(int vector) {
             this.vector = vector;
         }
 
@@ -78,11 +76,11 @@ public class GeffeGenerator {
             return vector;
         }
 
-        public int getCurrentBit() {
+        int getCurrentBit() {
             return vector & 1;
         }
 
-        public long getNext() {
+        long getNext() {
             int temp = ((vector >> 3) & 1) ^ ((vector) & 1);
             temp = temp & 1;
             vector = vector >> 1;
@@ -95,13 +93,27 @@ public class GeffeGenerator {
     private LinearFeedbackShiftRegister2 l2 = new LinearFeedbackShiftRegister2();
     private LinearFeedbackShiftRegister3 l3 = new LinearFeedbackShiftRegister3();
 
-    public GeffeGenerator(int startValue1, int startValue2, int startValue3) {
+    /**
+     * Create generator with specified start values.
+     */
+    public JiffyGenerator(int startValue1, int startValue2, int startValue3) {
         l1.setVector(startValue1);
         l2.setVector(startValue2);
         l3.setVector(startValue3);
     }
 
-    private int getNext() {
+    /**
+     * In this case start values will be random.
+     * */
+    public JiffyGenerator() {
+        Random random = new Random();
+        l1.setVector(Math.abs(random.nextInt()));
+        l2.setVector(Math.abs(random.nextInt()));
+        l3.setVector(Math.abs(random.nextInt()));
+    }
+
+    @Override
+    public int getNext() {
         l1.getNext();
         l2.getNext();
         l3.getNext();
@@ -109,18 +121,6 @@ public class GeffeGenerator {
             return l1.getCurrentBit();
         } else {
             return l2.getCurrentBit();
-        }
-    }
-
-    public void toFile(String fileName, int length) {
-        try {
-            FileWriter writer = new FileWriter(fileName);
-            for (int i = 0; i < length; i++) {
-                writer.write(Integer.toString(getNext()));
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 

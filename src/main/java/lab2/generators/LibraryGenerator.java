@@ -6,10 +6,24 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * 7. Генератор «Бібліотекар»
+ * 7. Library Generator.
+ *
+ * The "Librarian" generator converts the content into a byte sequence in an arbitrary language.
+ *
+ * Example of use.
+ *
+ * LibraryGenerator LibraryGenerator = new LibraryGenerator();
+ * LibraryGenerator.toFile("theory/Протокол.docx", "temp", 100);
  */
 public class LibraryGenerator {
 
+    /**
+     * Writes to file sequence of random bits.
+     *
+     * @param source source file for generator.
+     * @param destination destination file to write bits
+     * @param length count of bits to write
+     */
     public void toFile(String source, String destination, int length) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(source));

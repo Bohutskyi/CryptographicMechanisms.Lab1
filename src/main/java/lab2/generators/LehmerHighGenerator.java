@@ -5,11 +5,17 @@ import java.io.IOException;
 
 /**
  *
+ * Add here also:)
+ *
  */
 public class LehmerHighGenerator extends LehmerLowGenerator {
 
     public LehmerHighGenerator(int startValue) {
         super(startValue);
+    }
+
+    public LehmerHighGenerator() {
+        super();
     }
 
     @Override

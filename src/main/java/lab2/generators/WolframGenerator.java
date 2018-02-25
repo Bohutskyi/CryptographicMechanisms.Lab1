@@ -1,13 +1,14 @@
 package lab2.generators;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.math.BigInteger;
+import java.util.Random;
 
 /**
- * 6. Генератор Вольфрама
+ * 6. Wolfram Generator.
+ *
+ * Start value r0 != 0 and sets randomly.
+ * Output sequence {xi}: xi = ri mod 2, ri+1 = (r <<< 1) xor (ri v (ri >>> 1)).
  */
-public class WolframGenerator {
+public class WolframGenerator extends Generator {
 
     private int r0;
 
@@ -15,34 +16,15 @@ public class WolframGenerator {
         r0 = startValue;
     }
 
-    public void toFile(String fileName, int bitCount) {
-        int x = 0;
-        try {
-            FileWriter writer = new FileWriter(fileName);
-            for (int i = 0; i < bitCount; i++) {
-                x = r0 % 2;
-                r0 = Integer.rotateLeft(r0, 1) ^ (r0 | (Integer.rotateRight(r0, 1)));
-
-                writer.write(Integer.toString(Math.abs(x)));
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public WolframGenerator() {
+        r0 = Math.abs(new Random().nextInt());
     }
 
-
-//    public static void toFile(long startValue, int bitCount, String fileName) {
-//        r0 = startValue;
-//        try {
-//            FileWriter writer = new FileWriter(fileName);
-//            for (int i = 0; i < bitCount; i++) {
-//
-//                writer.write();
-//            }
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    @Override
+    public int getNext() {
+        int x = r0 % 2;
+        r0 = Integer.rotateLeft(r0, 1) ^ (r0 | (Integer.rotateRight(r0, 1)));
+        return Math.abs(x);
+    }
 
 }

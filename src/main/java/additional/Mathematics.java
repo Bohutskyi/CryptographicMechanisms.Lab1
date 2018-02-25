@@ -20,4 +20,17 @@ public class Mathematics {
         return result;
     }
 
+    /**
+     * Gets binary of specified value and adds zeros to beginning to get all 8 bits.
+     *
+     * @param value value which binary need to get
+     * @return binary of value
+     * */
+    public static String getBinary(int value) {
+        StringBuilder temp = new StringBuilder(Integer.toBinaryString(value));
+        while (temp.length() < 8) {
+            temp.insert(0, "0");
+        }
+        return temp.toString();
+    }
 }

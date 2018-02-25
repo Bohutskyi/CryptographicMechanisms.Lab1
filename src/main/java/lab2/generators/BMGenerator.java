@@ -1,14 +1,19 @@
 package lab2.generators;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Random;
 
 /**
- * 8. Генератор BM (Блюма-Мікалі)
+ * 8. Blum-Micali Generator.
+ *
+ * It is proved that the ability to guess the bits of the output sequence of this generator is equivalent
+ * to the possibility of solving the problem of discrete logarithm.
+ * p - large prime number, a is primitive root of modulus p.
+ * T0 is random not zero, 0 <= T0 <= p - 1.
+ * T(i+1) = a ^ T(i) mod p.
+ * {x(i)}: x(i) = 1 if T < (p-1)/2; 0 else.
  */
-public class BMGenerator {
+public class BMGenerator extends Generator {
 
     protected static final BigInteger p = new BigInteger("0CEA42B987C44FA642D80AD9F51F10457690DEF10C83D0BC1BCEE12FC3B6093E3", 16);
     protected static final BigInteger a = new BigInteger("5B88C41246790891C095E2878880342E88C79974303BD0400B090FE38A688356", 16);
@@ -20,27 +25,17 @@ public class BMGenerator {
         this.T0 = new BigInteger(Integer.toString(startValue), 10);
     }
 
-    protected void nextIteration() {
-        T0 = power(a, T0, p);
+    public BMGenerator() {
+        this.T0 = new BigInteger(Integer.toString(Math.abs(new Random().nextInt())));
     }
 
-    public void toFile(String fileName, int length) {
-        try {
-            FileWriter writer = new FileWriter(fileName);
-            for (int i = 0; i < length; i++) {
-                if (i % 50000 == 0) {
-                    System.out.println("i = " + i);
-                }
-                nextIteration();
-                if (T0.compareTo(threshold) == -1) {
-                    writer.write("1");
-                } else {
-                    writer.write("0");
-                }
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+    @Override
+    public int getNext() {
+        T0 = power(a, T0, p);
+        if (T0.compareTo(threshold) == -1) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 

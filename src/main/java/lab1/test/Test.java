@@ -65,6 +65,53 @@ public class Test {
         System.out.println("--------------------");
 
         System.out.println(LongNumber.Karatsuba(first, second).hex());
+
+        System.out.println("----------GCD----------");
+
+        //GCD
+        for (int i = 0; i < 25; ++i) {
+            first.setRandomValues();
+            second.setRandomValues();
+
+            System.out.println(first.hex());
+            System.out.println(second.hex());
+            try {
+                System.out.println(LongNumber.GCD(first, second).hex());
+            } catch (SubtractionException e) {
+                System.out.println(e.getMessage());
+            }
+
+            test1 = new BigInteger(first.hex(), 16);
+            test2 = new BigInteger(second.hex(), 16);
+            System.out.println(test1.gcd(test2).toString(16));
+        }
+
+        first.setRandomValues();
+        System.out.println(first.hex());
+        first = LongNumber.KillLastDigits(first, 5);
+        System.out.println(first.hex());
+        /*
+        //mod
+        System.out.println("---------Pow Mod-----------");
+        LongNumber third = new LongNumber(20);
+        third.setRandomValues();
+        first.setRandomValues();
+        second.setRandomValues();
+
+        System.out.println(first.hex());
+        System.out.println(second.hex());
+        System.out.println(third.hex());
+
+        try {
+            System.out.println(LongNumber.LongModPowerBarrett(first, second, third).hex());
+        } catch (SubtractionException e) {
+            System.out.println(e.getMessage());
+        }
+
+        test1 = new BigInteger(first.hex(), 16);
+        test2 = new BigInteger(second.hex(), 16);
+        BigInteger test3 = new BigInteger(third.hex(), 16);
+        System.out.println(test1.modPow(test2, test3));*/
     }
 
 }

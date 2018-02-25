@@ -667,32 +667,40 @@ public class LongNumber {
      * Greatest common divisor.
      */
     public static LongNumber GCD(LongNumber a, LongNumber b) throws SubtractionException {
-        LongNumber d = new LongNumber("1");
+//        LongNumber d = new LongNumber("1");
+//
+//        while (a.isEven() & b.isEven()) {
+//            a = LongNumber.RightMove(a);
+//            b = LongNumber.RightMove(b);
+//            d = LongNumber.LeftMove(d);
+//        }
+//
+//        while (a.isEven()) {
+//            a = LongNumber.RightMove(a);
+//        }
+//
+//        while (b.isNotNull()) {
+//            while (b.isEven()) {
+//                b = LongNumber.RightMove(b);
+//            }
+//            if (LongNumber.LongCmp(a, b) == 1) {
+//                LongNumber temp1 = a.copy();
+//                a = b.copy();
+//                b = LongNumber.LongSub(temp1, b).getLongNumber();
+//            } else {
+//                b = LongNumber.LongSub(b, a).getLongNumber();
+//            }
+//        }
+//        d = LongNumber.LongMul(d, a);
+//        return d;
 
-        while (a.isEven() & b.isEven()) {
-            a = LongNumber.RightMove(a);
-            b = LongNumber.RightMove(b);
-            d = LongNumber.LeftMove(d);
+        if (!b.isNotNull()) {
+            return a;
         }
-
-        while (a.isEven()) {
-            a = LongNumber.RightMove(a);
+        if (!a.isNotNull()) {
+            return b;
         }
-
-        while (b.isNotNull()) {
-            while (b.isEven()) {
-                b = LongNumber.RightMove(b);
-            }
-            if (LongNumber.LongCmp(a, b) == 1) {
-                LongNumber temp1 = a.copy();
-                a = b.copy();
-                b = LongNumber.LongSub(temp1, b).getLongNumber();
-            } else {
-                b = LongNumber.LongSub(b, a).getLongNumber();
-            }
-        }
-        d = LongNumber.LongMul(d, a);
-        return d;
+        return GCD(b, LongDivMod(a, b).getSecond());
     }
 
     /**

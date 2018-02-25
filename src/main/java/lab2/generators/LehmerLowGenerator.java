@@ -2,15 +2,16 @@ package lab2.generators;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.Locale;
 import java.util.Random;
 
 /**
- * Лінійний конгруентний генератор (генератор Лемера)
- * старші 8 біт
- * можливий -
- * */
+ * 2. Linear congruent generator.
+ *
+ * x(n+1) = (a * x(n) + c) mod n.
+ * a, m, c are const.
+ * x(0) - random and not equivalent zero.
+ * LehmerLow returns lower 8 bits of x(n).
+ */
 public class LehmerLowGenerator {
 
     protected static final long a = 65537;
@@ -21,6 +22,10 @@ public class LehmerLowGenerator {
 
     public LehmerLowGenerator(int startValue) {
         this.x0 = startValue;
+    }
+
+    public LehmerLowGenerator() {
+        this.x0 = Math.abs(new Random().nextLong());
     }
 
     public void toFile(String fileName, int byteCount) {

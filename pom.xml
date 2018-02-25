@@ -6,7 +6,7 @@
 
     <groupId>oleksandr</groupId>
     <artifactId>labs</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
@@ -30,7 +30,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>test.lab1.AppLab1</mainClass>
+                            <mainClass>lab1.test.AppLab1</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

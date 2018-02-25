@@ -55,7 +55,7 @@ public class LongNumber {
     public LongNumber(String [] array) {
         this.array = new ArrayList<>();
         for (int i = 0; i < array.length; i++) {
-            this.array.add(i);
+            this.array.add(Integer.parseInt(array[i], 16));
         }
     }
 
@@ -66,10 +66,11 @@ public class LongNumber {
      * @param s copy numbers from String to LongNumber
      */
     public LongNumber(String s) {
-        this.array = new ArrayList<>();
-        for (int i = 0; i < s.length(); i++) {
-            this.array.add(Character.getNumericValue(s.charAt(i)));
-        }
+        this(s.split(""));
+//        this.array = new ArrayList<>();
+//        for (int i = 0; i < s.length(); i++) {
+//            this.array.add(Character.getNumericValue(s.charAt(i)));
+//        }
     }
 
     /**
@@ -264,13 +265,15 @@ public class LongNumber {
     /**
      * Subtraction operation.
      *
+     *
      * @param A first operand
      * @param B subtrahend
-     * @return difference A and B
+     * @return difference A and B if A>B
      */
-    public static Pair LongSub(LongNumber A, LongNumber B) {
+    public static Pair LongSub(LongNumber A, LongNumber B) throws SubtractionException {
         if (LongNumber.LongCmp(A, B) == -1) {
-            return null;
+//            return null;
+            throw new SubtractionException(A, B);
         }
         int borrow = 0;
         while (A.getSize() > B.getSize()) {
@@ -414,7 +417,7 @@ public class LongNumber {
      * @return LongNumberPair which contains A/B and A%B
      */
     //Ділення
-    public static LongNumberPair LongDivMod(LongNumber A, LongNumber B) {
+    public static LongNumberPair LongDivMod(LongNumber A, LongNumber B) throws SubtractionException {
         StringBuilder s = new StringBuilder(B.toBinaryString());
         while (s.charAt(0) == '0' && s.length() != 1) {
             s.replace(0, 1, "");
@@ -681,39 +684,47 @@ public class LongNumber {
     /**
      * Greatest common divisor.
      */
-    public static LongNumber GCD(LongNumber a, LongNumber b) {
-        LongNumber d = new LongNumber("1");
+    public static LongNumber GCD(LongNumber a, LongNumber b) throws SubtractionException {
+//        LongNumber d = new LongNumber("1");
+//
+//        while (a.isEven() & b.isEven()) {
+//            a = LongNumber.RightMove(a);
+//            b = LongNumber.RightMove(b);
+//            d = LongNumber.LeftMove(d);
+//        }
+//
+//        while (a.isEven()) {
+//            a = LongNumber.RightMove(a);
+//        }
+//
+//        while (b.isNotNull()) {
+//            while (b.isEven()) {
+//                b = LongNumber.RightMove(b);
+//            }
+//            if (LongNumber.LongCmp(a, b) == 1) {
+//                LongNumber temp1 = a.copy();
+//                a = b.copy();
+//                b = LongNumber.LongSub(temp1, b).getLongNumber();
+//            } else {
+//                b = LongNumber.LongSub(b, a).getLongNumber();
+//            }
+//        }
+//        d = LongNumber.LongMul(d, a);
+//        return d;
 
-        while (a.isEven() & b.isEven()) {
-            a = LongNumber.RightMove(a);
-            b = LongNumber.RightMove(b);
-            d = LongNumber.LeftMove(d);
+        if (!b.isNotNull()) {
+            return a;
         }
-
-        while (a.isEven()) {
-            a = LongNumber.RightMove(a);
+        if (!a.isNotNull()) {
+            return b;
         }
-
-        while (b.isNotNull()) {
-            while (b.isEven()) {
-                b = LongNumber.RightMove(b);
-            }
-            if (LongNumber.LongCmp(a, b) == 1) {
-                LongNumber temp1 = a.copy();
-                a = b.copy();
-                b = LongNumber.LongSub(temp1, b).getLongNumber();
-            } else {
-                b = LongNumber.LongSub(b, a).getLongNumber();
-            }
-        }
-        d = LongNumber.LongMul(d, a);
-        return d;
+        return GCD(b, LongDivMod(a, b).getSecond());
     }
 
     /**
      * Least common multiple.
      */
-    public static LongNumber LCM(LongNumber a, LongNumber b) {
+    public static LongNumber LCM(LongNumber a, LongNumber b) throws SubtractionException {
         LongNumber temp = LongNumber.GCD(a, b);
         LongNumber temp2 = LongNumber.LongMul(a ,b);
         temp = LongNumber.LongDivMod(temp2, temp).getFirst();
@@ -734,7 +745,7 @@ public class LongNumber {
         return temp;
     }
 
-    public static LongNumber getM(LongNumber n) {
+    public static LongNumber getM(LongNumber n) throws SubtractionException {
         String s = Integer.toHexString(2 * n.getSize());
         LongNumber m = LongNumber.LongPower1(new LongNumber("10"), new LongNumber(s));
         m = LongNumber.LongDivMod(m ,n).getFirst();
@@ -743,13 +754,14 @@ public class LongNumber {
 
     //Редукція за Барреттом, r = x mod n
     //|n| = k, |x| = 2*k
-    public static LongNumber BarrettReduction(LongNumber x, LongNumber n, LongNumber m) {
+    public static LongNumber BarrettReduction(LongNumber x, LongNumber n, LongNumber m) throws SubtractionException {
         int k = n.getSize();
 
         LongNumber q = LongNumber.KillLastDigits(x, k - 1);
         if (q.array.size() == 0) {
             q.array.add(0);
         }
+
         q = LongNumber.LongMul(q, m);
         q = LongNumber.KillLastDigits(q, k + 1);
 
@@ -768,7 +780,7 @@ public class LongNumber {
     /**
      * @return A^B mon N
      */
-    public static LongNumber LongModPowerBarrett(LongNumber A, LongNumber B, LongNumber N) {
+    public static LongNumber LongModPowerBarrett(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
         LongNumber C = new LongNumber(1);
         C.clear(1);
 
@@ -792,7 +804,7 @@ public class LongNumber {
     /**
      * @return (A + B) mod N
      */
-    public static LongNumber LongAddMod(LongNumber A, LongNumber B, LongNumber N) {
+    public static LongNumber LongAddMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
         LongNumber result = LongNumber.LongAdd(A, B);
         result = LongNumber.BarrettReduction(result, N, LongNumber.getM(N));
         return result;
@@ -801,7 +813,7 @@ public class LongNumber {
     /**
      * @return (A - B) mod N
      */
-    public static LongNumber LongSubMod(LongNumber A, LongNumber B, LongNumber N) {
+    public static LongNumber LongSubMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
         if (LongNumber.LongCmp(A, B) == 0) {
             return new LongNumber("0");
         }
@@ -824,7 +836,7 @@ public class LongNumber {
     /**
      * @return (A*B) mod N
      */
-    public static LongNumber LongMulMod(LongNumber A, LongNumber B, LongNumber N) {
+    public static LongNumber LongMulMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
         String s = B.toBinaryString();
         LongNumber m = LongNumber.getM(N);
         LongNumber power = new LongNumber("1");

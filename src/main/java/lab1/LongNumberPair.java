@@ -9,7 +9,7 @@ public class LongNumberPair {
         this.second = second;
     }
 
-    LongNumber getFirst() {
+    public LongNumber getFirst() {
         return first;
     }
 

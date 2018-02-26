@@ -125,6 +125,7 @@ public class Test {
         System.out.println(test1.modPow(test2, test3).toString(16));
 
 //        System.out.println(test1.pow(Integer.parseInt(t2.hex(), 16)).toString(16));
+
     }
 
 }

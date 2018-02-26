@@ -1,7 +1,5 @@
-Benchmark                        Mode    Cnt      Score      Error   Units
-
----------------------------------------------------------------------------
-
+Benchmark                                Mode    Cnt      Score      Error   Units
+----------------------------------------------------------------------------------
 BenchmarksLab1.addBigIntegers            thrpt      5   4386,973 ± 351,085  ops/ms
 BenchmarksLab1.addLongNumbers            thrpt      5    138,628 ±   3,018  ops/ms
 
@@ -17,9 +15,7 @@ BenchmarksLab1.karatsubaMulLongNumbers   thrpt      5      0,034 ±   0,001  ops
 
 BenchmarksLab1.subBigIntegers            thrpt      5  20927,221 ± 470,257  ops/ms
 BenchmarksLab1.subLongNumbers            thrpt      5    118,579 ±   1,635  ops/ms
-
 ----------------------------------------------------------------------------------
-
 BenchmarksLab1.addBigIntegers           sample  71173     ≈ 10⁻⁴             ms/op
 BenchmarksLab1.addLongNumbers           sample  85959      0,007 ±   0,001   ms/op
 
@@ -35,9 +31,7 @@ BenchmarksLab1.karatsubaMulLongNumbers  sample    167     30,336 ±   0,613   ms
 
 BenchmarksLab1.subBigIntegers           sample  93111     ≈ 10⁻⁴             ms/op
 BenchmarksLab1.subLongNumbers           sample  68886      0,009 ±   0,001   ms/op
-
 ----------------------------------------------------------------------------------
-
 * All results are printed in MILLISECONDS
 
 * Throughput("thrpt")   - Measures the number of operations per second, meaning the number of times per second your benchmark method could be executed.

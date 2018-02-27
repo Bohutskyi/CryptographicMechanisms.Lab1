@@ -1,0 +1,403 @@
+Here described main methods considered and used in Lab1
+
+---- Constructing BigInteger -----------------------------
+
+  **
+       * signum - The signum of this BigInteger: -1 for negative, 0 for zero, or
+       * 1 for positive.  Note that the BigInteger zero <i>must</i> have
+       * a signum of 0.  This is necessary to ensures that there is exactly one
+       * representation for each BigInteger value.
+  **
+       * mag - The magnitude of this BigInteger, in <i>big-endian</i> order: the
+       * zeroth element of this array is the most-significant int of the
+       * magnitude.  The magnitude must be "minimal" in that the most-significant
+       * int ({@code mag[0]}) must be non-zero.  This is necessary to
+       * ensure that there is exactly one representation for each BigInteger
+       * value.  Note that this implies that the BigInteger zero has a
+       * zero-length mag array.
+       */
+---- Multiplication -------------------------------------------------------------------
+
+    /**
+     * Returns a BigInteger whose value is {@code (this * val)}.
+     *
+     * @implNote An implementation may offer better algorithmic
+     * performance when {@code val == this}.
+     *
+     * @param  val value to be multiplied by this BigInteger.
+     * @return {@code this * val}
+     */
+    public BigInteger multiply(BigInteger val) {
+        if (val.signum == 0 || signum == 0)
+            return ZERO;
+
+        int xlen = mag.length;
+
+        if (val == this && xlen > MULTIPLY_SQUARE_THRESHOLD) {
+            return square();
+        }
+
+        int ylen = val.mag.length;
+
+        if ((xlen < KARATSUBA_THRESHOLD) || (ylen < KARATSUBA_THRESHOLD)) {
+            int resultSign = signum == val.signum ? 1 : -1;
+            if (val.mag.length == 1) {
+                return multiplyByInt(mag,val.mag[0], resultSign);
+            }
+            if (mag.length == 1) {
+                return multiplyByInt(val.mag,mag[0], resultSign);
+            }
+            int[] result = multiplyToLen(mag, xlen,
+                                         val.mag, ylen, null);
+            result = trustedStripLeadingZeroInts(result);
+            return new BigInteger(result, resultSign);
+        } else {
+            if ((xlen < TOOM_COOK_THRESHOLD) && (ylen < TOOM_COOK_THRESHOLD)) {
+                return multiplyKaratsuba(this, val);
+            } else {
+                return multiplyToomCook3(this, val);
+            }
+        }
+    }
+
+
+    private static BigInteger multiplyByInt(int[] x, int y, int sign) {
+        if (Integer.bitCount(y) == 1) {
+            return new BigInteger(shiftLeft(x,Integer.numberOfTrailingZeros(y)), sign);
+        }
+        int xlen = x.length;
+        int[] rmag =  new int[xlen + 1];
+        long carry = 0;
+        long yl = y & LONG_MASK;
+        int rstart = rmag.length - 1;
+        for (int i = xlen - 1; i >= 0; i--) {
+            long product = (x[i] & LONG_MASK) * yl + carry;
+            rmag[rstart--] = (int)product;
+            carry = product >>> 32;
+        }
+        if (carry == 0L) {
+            rmag = java.util.Arrays.copyOfRange(rmag, 1, rmag.length);
+        } else {
+            rmag[rstart] = (int)carry;
+        }
+        return new BigInteger(rmag, sign);
+    }
+
+    /**
+     * Multiplies int arrays x and y to the specified lengths and places
+     * the result into z. There will be no leading zeros in the resultant array.
+     */
+    private static int[] multiplyToLen(int[] x, int xlen, int[] y, int ylen, int[] z) {
+        int xstart = xlen - 1;
+        int ystart = ylen - 1;
+
+        if (z == null || z.length < (xlen+ ylen))
+            z = new int[xlen+ylen];
+
+        long carry = 0;
+        for (int j=ystart, k=ystart+1+xstart; j >= 0; j--, k--) {
+            long product = (y[j] & LONG_MASK) *
+                           (x[xstart] & LONG_MASK) + carry;
+            z[k] = (int)product;
+            carry = product >>> 32;
+        }
+        z[xstart] = (int)carry;
+
+        for (int i = xstart-1; i >= 0; i--) {
+            carry = 0;
+            for (int j=ystart, k=ystart+1+i; j >= 0; j--, k--) {
+                long product = (y[j] & LONG_MASK) *
+                               (x[i] & LONG_MASK) +
+                               (z[k] & LONG_MASK) + carry;
+                z[k] = (int)product;
+                carry = product >>> 32;
+            }
+            z[i] = (int)carry;
+        }
+        return z;
+    }
+
+    /**
+     * Multiplies two BigIntegers using the Karatsuba multiplication
+     * algorithm.  This is a recursive divide-and-conquer algorithm which is
+     * more efficient for large numbers than what is commonly called the
+     * "grade-school" algorithm used in multiplyToLen.  If the numbers to be
+     * multiplied have length n, the "grade-school" algorithm has an
+     * asymptotic complexity of O(n^2).  In contrast, the Karatsuba algorithm
+     * has complexity of O(n^(log2(3))), or O(n^1.585).  It achieves this
+     * increased performance by doing 3 multiplies instead of 4 when
+     * evaluating the product.  As it has some overhead, should be used when
+     * both numbers are larger than a certain threshold (found
+     * experimentally).
+     *
+     * See:  http://en.wikipedia.org/wiki/Karatsuba_algorithm
+     */
+private static BigInteger multiplyKaratsuba(BigInteger x, BigInteger y) {
+        int xlen = x.mag.length;
+        int ylen = y.mag.length;
+
+        // The number of ints in each half of the number.
+        int half = (Math.max(xlen, ylen)+1) / 2;
+
+        // xl and yl are the lower halves of x and y respectively,
+        // xh and yh are the upper halves.
+        BigInteger xl = x.getLower(half);
+        BigInteger xh = x.getUpper(half);
+        BigInteger yl = y.getLower(half);
+        BigInteger yh = y.getUpper(half);
+
+        BigInteger p1 = xh.multiply(yh);  // p1 = xh*yh
+        BigInteger p2 = xl.multiply(yl);  // p2 = xl*yl
+
+        // p3=(xh+xl)*(yh+yl)
+        BigInteger p3 = xh.add(xl).multiply(yh.add(yl));
+
+        // result = p1 * 2^(32*2*half) + (p3 - p1 - p2) * 2^(32*half) + p2
+        BigInteger result = p1.shiftLeft(32*half).add(p3.subtract(p1).subtract(p2)).shiftLeft(32*half).add(p2);
+
+        if (x.signum != y.signum) {
+            return result.negate();
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Multiplies two BigIntegers using a 3-way Toom-Cook multiplication
+     * algorithm.  This is a recursive divide-and-conquer algorithm which is
+     * more efficient for large numbers than what is commonly called the
+     * "grade-school" algorithm used in multiplyToLen.  If the numbers to be
+     * multiplied have length n, the "grade-school" algorithm has an
+     * asymptotic complexity of O(n^2).  In contrast, 3-way Toom-Cook has a
+     * complexity of about O(n^1.465).  It achieves this increased asymptotic
+     * performance by breaking each number into three parts and by doing 5
+     * multiplies instead of 9 when evaluating the product.  Due to overhead
+     * (additions, shifts, and one division) in the Toom-Cook algorithm, it
+     * should only be used when both numbers are larger than a certain
+     * threshold (found experimentally).  This threshold is generally larger
+     * than that for Karatsuba multiplication, so this algorithm is generally
+     * only used when numbers become significantly larger.
+     *
+     * The algorithm used is the "optimal" 3-way Toom-Cook algorithm outlined
+     * by Marco Bodrato.
+     *
+     *  See: http://bodrato.it/toom-cook/
+     *       http://bodrato.it/papers/#WAIFI2007
+     *
+     * "Towards Optimal Toom-Cook Multiplication for Univariate and
+     * Multivariate Polynomials in Characteristic 2 and 0." by Marco BODRATO;
+     * In C.Carlet and B.Sunar, Eds., "WAIFI'07 proceedings", p. 116-133,
+     * LNCS #4547. Springer, Madrid, Spain, June 21-22, 2007.
+     *
+     */
+private static BigInteger multiplyToomCook3(BigInteger a, BigInteger b) {
+        int alen = a.mag.length;
+        int blen = b.mag.length;
+
+        int largest = Math.max(alen, blen);
+
+        // k is the size (in ints) of the lower-order slices.
+        int k = (largest+2)/3;   // Equal to ceil(largest/3)
+
+        // r is the size (in ints) of the highest-order slice.
+        int r = largest - 2*k;
+
+        // Obtain slices of the numbers. a2 and b2 are the most significant
+        // bits of the numbers a and b, and a0 and b0 the least significant.
+        BigInteger a0, a1, a2, b0, b1, b2;
+        a2 = a.getToomSlice(k, r, 0, largest);
+        a1 = a.getToomSlice(k, r, 1, largest);
+        a0 = a.getToomSlice(k, r, 2, largest);
+        b2 = b.getToomSlice(k, r, 0, largest);
+        b1 = b.getToomSlice(k, r, 1, largest);
+        b0 = b.getToomSlice(k, r, 2, largest);
+
+        BigInteger v0, v1, v2, vm1, vinf, t1, t2, tm1, da1, db1;
+
+        v0 = a0.multiply(b0);
+        da1 = a2.add(a0);
+        db1 = b2.add(b0);
+        vm1 = da1.subtract(a1).multiply(db1.subtract(b1));
+        da1 = da1.add(a1);
+        db1 = db1.add(b1);
+        v1 = da1.multiply(db1);
+        v2 = da1.add(a2).shiftLeft(1).subtract(a0).multiply(
+             db1.add(b2).shiftLeft(1).subtract(b0));
+        vinf = a2.multiply(b2);
+
+        // The algorithm requires two divisions by 2 and one by 3.
+        // All divisions are known to be exact, that is, they do not produce
+        // remainders, and all results are positive.  The divisions by 2 are
+        // implemented as right shifts which are relatively efficient, leaving
+        // only an exact division by 3, which is done by a specialized
+        // linear-time algorithm.
+        t2 = v2.subtract(vm1).exactDivideBy3();
+        tm1 = v1.subtract(vm1).shiftRight(1);
+        t1 = v1.subtract(v0);
+        t2 = t2.subtract(t1).shiftRight(1);
+        t1 = t1.subtract(tm1).subtract(vinf);
+        t2 = t2.subtract(vinf.shiftLeft(1));
+        tm1 = tm1.subtract(t2);
+
+        // Number of bits to shift left.
+        int ss = k*32;
+
+        BigInteger result = vinf.shiftLeft(ss).add(t2).shiftLeft(ss).add(t1).shiftLeft(ss).add(tm1).shiftLeft(ss).add(v0);
+
+        if (a.signum != b.signum) {
+            return result.negate();
+        } else {
+            return result;
+        }
+    }
+
+
+---- Common methods and constants that were used internally ------------------------------------------
+
+    /**
+     * The threshold value for using squaring code to perform multiplication
+     * of a {@code BigInteger} instance by itself.  If the number of ints in
+     * the number are larger than this value, {@code multiply(this)} will
+     * return {@code square()}.
+     */
+    private static final int MULTIPLY_SQUARE_THRESHOLD = 20;
+
+    /**
+     * The threshold value for using Karatsuba squaring.  If the number
+     * of ints in the number are larger than this value,
+     * Karatsuba squaring will be used.   This value is found
+     * experimentally to work well.
+     */
+    private static final int KARATSUBA_SQUARE_THRESHOLD = 128;
+
+    /**
+     * The threshold value for using 3-way Toom-Cook multiplication.
+     * If the number of ints in each mag array is greater than the
+     * Karatsuba threshold, and the number of ints in at least one of
+     * the mag arrays is greater than this threshold, then Toom-Cook
+     * multiplication will be used.
+     */
+    private static final int TOOM_COOK_THRESHOLD = 240;
+
+   /**
+     * This constant limits {@code mag.length} of BigIntegers to the supported
+     * range.
+     */
+    private static final int MAX_MAG_LENGTH = Integer.MAX_VALUE / Integer.SIZE + 1; // (1 << 26)
+
+
+
+    /**
+         * Adds the contents of the int arrays x and y. This method allocates
+         * a new int array to hold the answer and returns a reference to that
+         * array.
+         */
+        private static int[] add(int[] x, int[] y) {
+            // If x is shorter, swap the two arrays
+            if (x.length < y.length) {
+                int[] tmp = x;
+                x = y;
+                y = tmp;
+            }
+
+            int xIndex = x.length;
+            int yIndex = y.length;
+            int result[] = new int[xIndex];
+            long sum = 0;
+            if (yIndex == 1) {
+                sum = (x[--xIndex] & LONG_MASK) + (y[0] & LONG_MASK) ;
+                result[xIndex] = (int)sum;
+            } else {
+                // Add common parts of both numbers
+                while (yIndex > 0) {
+                    sum = (x[--xIndex] & LONG_MASK) +
+                          (y[--yIndex] & LONG_MASK) + (sum >>> 32);
+                    result[xIndex] = (int)sum;
+                }
+            }
+            // Copy remainder of longer number while carry propagation is required
+            boolean carry = (sum >>> 32 != 0);
+            while (xIndex > 0 && carry)
+                carry = ((result[--xIndex] = x[xIndex] + 1) == 0);
+
+            // Copy remainder of longer number
+            while (xIndex > 0)
+                result[--xIndex] = x[xIndex];
+
+            // Grow result if necessary
+            if (carry) {
+                int bigger[] = new int[result.length + 1];
+                System.arraycopy(result, 0, bigger, 1, result.length);
+                bigger[0] = 0x01;
+                return bigger;
+            }
+            return result;
+        }
+
+        private static int[] subtract(long val, int[] little) {
+            int highWord = (int)(val >>> 32);
+            if (highWord == 0) {
+                int result[] = new int[1];
+                result[0] = (int)(val - (little[0] & LONG_MASK));
+                return result;
+            } else {
+                int result[] = new int[2];
+                if (little.length == 1) {
+                    long difference = ((int)val & LONG_MASK) - (little[0] & LONG_MASK);
+                    result[1] = (int)difference;
+                    // Subtract remainder of longer number while borrow propagates
+                    boolean borrow = (difference >> 32 != 0);
+                    if (borrow) {
+                        result[0] = highWord - 1;
+                    } else {        // Copy remainder of longer number
+                        result[0] = highWord;
+                    }
+                    return result;
+                } else { // little.length == 2
+                    long difference = ((int)val & LONG_MASK) - (little[1] & LONG_MASK);
+                    result[1] = (int)difference;
+                    difference = (highWord & LONG_MASK) - (little[0] & LONG_MASK) + (difference >> 32);
+                    result[0] = (int)difference;
+                    return result;
+                }
+            }
+        }
+    /**
+         * Compares the magnitude array of this BigInteger with the specified
+         * BigInteger's. This is the version of compareTo ignoring sign.
+         *
+         * @param val BigInteger whose magnitude array to be compared.
+         * @return -1, 0 or 1 as this magnitude array is less than, equal to or
+         *         greater than the magnitude aray for the specified BigInteger's.
+         */
+        final int compareMagnitude(BigInteger val) {
+            int[] m1 = mag;
+            int len1 = m1.length;
+            int[] m2 = val.mag;
+            int len2 = m2.length;
+            if (len1 < len2)
+                return -1;
+            if (len1 > len2)
+                return 1;
+            for (int i = 0; i < len1; i++) {
+                int a = m1[i];
+                int b = m2[i];
+                if (a != b)
+                    return ((a & LONG_MASK) < (b & LONG_MASK)) ? -1 : 1;
+            }
+            return 0;
+        }
+
+    /**
+         * Returns the input array stripped of any leading zero bytes.
+         * Since the source is trusted the copying may be skipped.
+         */
+        private static int[] trustedStripLeadingZeroInts(int val[]) {
+            int vlen = val.length;
+            int keep;
+
+            // Find first nonzero byte
+            for (keep = 0; keep < vlen && val[keep] == 0; keep++)
+                ;
+            return keep == 0 ? val : java.util.Arrays.copyOfRange(val, keep, vlen);
+        }

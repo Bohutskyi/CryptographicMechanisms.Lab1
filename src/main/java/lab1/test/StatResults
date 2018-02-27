@@ -1,36 +1,29 @@
-Benchmark                                Mode    Cnt      Score      Error   Units
-----------------------------------------------------------------------------------
-BenchmarksLab1.addBigIntegers            thrpt      5   4386,973 ± 351,085  ops/ms
-BenchmarksLab1.addLongNumbers            thrpt      5    138,628 ±   3,018  ops/ms
+Benchmark                                Mode    Cnt   Score     Error   Units
+---------------------------------------------------------------------------------
 
-BenchmarksLab1.divBigIntegers            thrpt      5   9999,359 ± 609,382  ops/ms
-BenchmarksLab1.divLongNumbers            thrpt      5      0,520 ±   0,012  ops/ms
+BenchmarksLab1.mulLongNumbers            thrpt      2    0,031           ops/ms     <- LongNumber (developed)
+BenchmarksLab1.karatsubaMulLongNumbers   thrpt      2    0,028           ops/ms
 
-BenchmarksLab1.gcdBigIntegers            thrpt      5   4410,938 ±  75,636  ops/ms
-BenchmarksLab1.gcdLongNumbers            thrpt      5      0,002 ±   0,001  ops/ms
+BenchmarksLab1.mulBigIntegers            thrpt      2  147,911           ops/ms     <- BigInteger (package java.math; @since JDK1.1)
+BenchmarksLab1.karatsubaMulBigIntegers   thrpt      2  119,699           ops/ms
+BenchmarksLab1.toomCookMulBigIntegers    thrpt      2   92,913           ops/ms
 
-BenchmarksLab1.mulBigIntegers            thrpt      5  20992,002 ± 509,023  ops/ms
-BenchmarksLab1.mulLongNumbers            thrpt      5      0,038 ±   0,001  ops/ms
-BenchmarksLab1.karatsubaMulLongNumbers   thrpt      5      0,034 ±   0,001  ops/ms
+BenchmarksLab1.mulBigDecimals            thrpt      2  111,354           ops/ms     <- BigDecimal (package java.math)
 
-BenchmarksLab1.subBigIntegers            thrpt      5  20927,221 ± 470,257  ops/ms
-BenchmarksLab1.subLongNumbers            thrpt      5    118,579 ±   1,635  ops/ms
-----------------------------------------------------------------------------------
-BenchmarksLab1.addBigIntegers           sample  71173     ≈ 10⁻⁴             ms/op
-BenchmarksLab1.addLongNumbers           sample  85959      0,007 ±   0,001   ms/op
+BenchmarksLab1.mulLargeIntegers          thrpt      2   25,742           ops/ms     <- LargeNumber (package org.jscience.mathematics.number)
 
-BenchmarksLab1.divBigIntegers           sample  87662     ≈ 10⁻⁴             ms/op
-BenchmarksLab1.divLongNumbers           sample   2216      2,255 ±   0,051   ms/op
+---------------------------------------------------------------------------------
 
-BenchmarksLab1.gcdBigIntegers           sample  69873     ≈ 10⁻⁴             ms/op
-BenchmarksLab1.gcdLongNumbers           sample     15    459,766 ±  49,387   ms/op
+BenchmarksLab1.mulLongNumbers           sample     59   34,858 ±  1,229   ms/op
+BenchmarksLab1.karatsubaMulLongNumbers  sample     60   34,335 ±  1,675   ms/op
 
-BenchmarksLab1.mulBigIntegers           sample  90953     ≈ 10⁻⁴             ms/op
-BenchmarksLab1.mulLongNumbers           sample    195     26,205 ±   0,260   ms/op
-BenchmarksLab1.karatsubaMulLongNumbers  sample    167     30,336 ±   0,613   ms/op
+BenchmarksLab1.mulBigIntegers           sample  32729    0,008 ±  0,001   ms/op
+BenchmarksLab1.karatsubaMulBigIntegers  sample  27695    0,009 ±  0,001   ms/op
+BenchmarksLab1.toomCookMulBigIntegers   sample  22329    0,011 ±  0,001   ms/op
 
-BenchmarksLab1.subBigIntegers           sample  93111     ≈ 10⁻⁴             ms/op
-BenchmarksLab1.subLongNumbers           sample  68886      0,009 ±   0,001   ms/op
+BenchmarksLab1.mulBigDecimals           sample  29754    0,008 ±  0,001   ms/op
+BenchmarksLab1.mulLargeIntegers         sample  21488    0,051 ±  0,004   ms/op
+
 ----------------------------------------------------------------------------------
 * All results are printed in MILLISECONDS
 

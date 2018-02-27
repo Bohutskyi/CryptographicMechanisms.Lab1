@@ -1,15 +1,16 @@
 package lab1.test;
 
 import lab1.LongNumber;
-import lab1.LongNumberPair;
-import lab1.Pair;
-import lab1.SubtractionException;
+import org.jscience.mathematics.number.LargeInteger;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
 
@@ -27,32 +28,16 @@ public class BenchmarksLab1 {
         public static BigInteger second = new BigInteger(MyState.first.hex(), 16);
     }
 
-    @Benchmark
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    @BenchmarkMode(Mode.All)
-    public static LongNumber addLongNumbers() {
-        return LongNumber.LongAdd(MyState.first, MyState.second);
+    @State(Scope.Thread)
+    public static class LargeIntegerState {
+        public static LargeInteger firstLargeNumber = LargeInteger.valueOf(BigIntegerState.first);
+        public static LargeInteger secondLargeNumber = LargeInteger.valueOf(BigIntegerState.second);
     }
 
-    @Benchmark
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    @BenchmarkMode(Mode.All)
-    public static BigInteger addBigIntegers() {
-        return BigIntegerState.first.add(BigIntegerState.second);
-    }
-
-    @Benchmark
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    @BenchmarkMode(Mode.All)
-    public static Pair subLongNumbers() throws SubtractionException {
-        return LongNumber.LongSub(MyState.first, MyState.second);
-    }
-
-    @Benchmark
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    @BenchmarkMode(Mode.All)
-    public static BigInteger subBigIntegers() {
-        return BigIntegerState.first.subtract(BigIntegerState.second);
+    @State(Scope.Thread)
+    public static class BigDecState {
+        public static BigDecimal first = new BigDecimal(BigIntegerState.first);
+        public static BigDecimal second = new BigDecimal(BigIntegerState.second);
     }
 
     @Benchmark
@@ -73,46 +58,53 @@ public class BenchmarksLab1 {
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @BenchmarkMode(Mode.All)
     public static BigInteger mulBigIntegers() {
-        return BigIntegerState.first.subtract(BigIntegerState.second);
+        return BigIntegerState.first.multiply(BigIntegerState.second);
     }
 
     @Benchmark
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @BenchmarkMode(Mode.All)
-    public static LongNumberPair divLongNumbers() throws SubtractionException {
-        return LongNumber.LongDivMod(MyState.first, MyState.second);
+    public static BigInteger karatsubaMulBigIntegers() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = BigInteger.class.getDeclaredMethod("multiplyKaratsuba", BigInteger.class, BigInteger.class);
+        method.setAccessible(true);
+        return (BigInteger) method
+                .invoke(new BigInteger("0"), BigIntegerState.first, BigIntegerState.second);
     }
 
     @Benchmark
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @BenchmarkMode(Mode.All)
-    public static BigInteger divBigIntegers() {
-        return BigIntegerState.first.divide(BigIntegerState.second);
+    public static BigInteger toomCookMulBigIntegers() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = BigInteger.class.getDeclaredMethod("multiplyToomCook3", BigInteger.class, BigInteger.class);
+        method.setAccessible(true);
+        return (BigInteger) method
+                .invoke(new BigInteger("0"), BigIntegerState.first, BigIntegerState.second);
     }
 
     @Benchmark
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @BenchmarkMode(Mode.All)
-    public static LongNumber gcdLongNumbers() throws SubtractionException {
-        return LongNumber.GCD(MyState.first, MyState.second);
+    public static BigDecimal mulBigDecimals() {
+        return BigDecState.first.multiply(BigDecState.second);
     }
 
     @Benchmark
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @BenchmarkMode(Mode.All)
-    public static BigInteger gcdBigIntegers() {
-        return BigIntegerState.first.gcd(BigIntegerState.second);
+    public static LargeInteger mulLargeIntegers() {
+        return LargeIntegerState.firstLargeNumber.times(LargeIntegerState.secondLargeNumber);
     }
 
     public static void generatePerformanceResults() throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(BenchmarksLab1.class.getSimpleName())
-                .warmupIterations(5)
-                .measurementIterations(5)
+                .warmupIterations(2)
+                .measurementIterations(2)
                 .forks(1)
                 .build();
 
         new Runner(opt).run();
     }
+
 
 }

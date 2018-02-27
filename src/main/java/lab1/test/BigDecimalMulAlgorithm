@@ -1,0 +1,80 @@
+
+---- BigDecimal attribute ------------------------------------------------------------------
+
+    /**
+     * If the absolute value of the significand of this BigDecimal is
+     * less than or equal to {@code Long.MAX_VALUE}, the value can be
+     * compactly stored in this field and used in computations.
+     */
+    private final transient long intCompact;
+
+---- Constant that was used internally -----------------------------------------------------
+
+    /**
+     * Sentinel value for {@link #intCompact} indicating the
+     * significand information is only available from {@code intVal}.
+     */
+    static final long INFLATED = Long.MIN_VALUE;
+
+
+---- Multiplication method -----------------------------------------------------------------
+
+   /**
+     * Returns a {@code BigDecimal} whose value is <tt>(this &times;
+     * multiplicand)</tt>, and whose scale is {@code (this.scale() +
+     * multiplicand.scale())}.
+     *
+     * @param  multiplicand value to be multiplied by this {@code BigDecimal}.
+     * @return {@code this * multiplicand}
+     */
+    public BigDecimal multiply(BigDecimal multiplicand) {
+        int productScale = checkScale((long) scale + multiplicand.scale);
+        if (this.intCompact != INFLATED) {
+            if ((multiplicand.intCompact != INFLATED)) {
+                return multiply(this.intCompact, multiplicand.intCompact, productScale);
+            } else {
+                return multiply(this.intCompact, multiplicand.intVal, productScale);
+            }
+        } else {
+            if ((multiplicand.intCompact != INFLATED)) {
+                return multiply(multiplicand.intCompact, this.intVal, productScale);
+            } else {
+                return multiply(this.intVal, multiplicand.intVal, productScale);
+            }
+        }
+    }
+
+   /**
+     * Check a scale for Underflow or Overflow.  If this BigDecimal is
+     * nonzero, throw an exception if the scale is outof range. If this
+     * is zero, saturate the scale to the extreme value of the right
+     * sign if the scale is out of range.
+     *
+     * @param val The new scale.
+     * @throws ArithmeticException (overflow or underflow) if the new
+     *         scale is out of range.
+     * @return validated scale as an int.
+     */
+    private int checkScale(long val) {
+        int asInt = (int)val;
+        if (asInt != val) {
+            asInt = val>Integer.MAX_VALUE ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            BigInteger b;
+            if (intCompact != 0 &&
+                ((b = intVal) == null || b.signum() != 0))
+                throw new ArithmeticException(asInt>0 ? "Underflow":"Overflow");
+        }
+        return asInt;
+    }
+
+
+    private static BigDecimal multiply(long x, BigInteger y, int scale) {
+        if(x==0) {
+            return zeroValueOf(scale);
+        }
+        return new BigDecimal(y.multiply(x),INFLATED,scale,0);
+    }
+
+    private static BigDecimal multiply(BigInteger x, BigInteger y, int scale) {
+        return new BigDecimal(x.multiply(y),INFLATED,scale,0);
+    }

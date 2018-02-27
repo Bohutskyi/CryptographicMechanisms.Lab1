@@ -1,31 +1,32 @@
-Benchmark                                Mode    Cnt   Score     Error   Units
----------------------------------------------------------------------------------
+Benchmark                                     Mode    Cnt       Score      Error   Units
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+BenchmarksLab1.karatsubaMulBigIntegers1024  sample  30022       0,602 ±    0,125   us/op
+BenchmarksLab1.karatsubaMulBigIntegers768   sample  26322       0,706 ±    0,240   us/op
 
-BenchmarksLab1.mulLongNumbers            thrpt      2    0,031           ops/ms     <- LongNumber (developed)
-BenchmarksLab1.karatsubaMulLongNumbers   thrpt      2    0,028           ops/ms
+BenchmarksLab1.karatsubaMulLongNumbers1024  sample     25   82997,412 ± 8448,563   us/op
+BenchmarksLab1.karatsubaMulLongNumbers768   sample     56   36717,714 ± 1797,139   us/op
 
-BenchmarksLab1.mulBigIntegers            thrpt      2  147,911           ops/ms     <- BigInteger (package java.math; @since JDK1.1)
-BenchmarksLab1.karatsubaMulBigIntegers   thrpt      2  119,699           ops/ms
-BenchmarksLab1.toomCookMulBigIntegers    thrpt      2   92,913           ops/ms
+BenchmarksLab1.mulBigDecimals1024           sample  26078       0,054 ±    0,004   us/op
+BenchmarksLab1.mulBigDecimals768            sample  27866       0,048 ±    0,003   us/op
 
-BenchmarksLab1.mulBigDecimals            thrpt      2  111,354           ops/ms     <- BigDecimal (package java.math)
+BenchmarksLab1.mulBigIntegers1024           sample  34156       0,047 ±    0,004   us/op
+BenchmarksLab1.mulBigIntegers768            sample  36211       0,046 ±    0,004   us/op
 
-BenchmarksLab1.mulLargeIntegers          thrpt      2   25,742           ops/ms     <- LargeNumber (package org.jscience.mathematics.number)
+BenchmarksLab1.mulLargeIntegers1024         sample  26081       0,055 ±    0,006   us/op
+BenchmarksLab1.mulLargeIntegers768          sample  24967       0,063 ±    0,005   us/op
 
----------------------------------------------------------------------------------
+BenchmarksLab1.mulLongNumbers1024           sample     22   96600,064 ± 2601,612   us/op
+BenchmarksLab1.mulLongNumbers768            sample     45   45800,926 ± 1458,895   us/op
 
-BenchmarksLab1.mulLongNumbers           sample     59   34,858 ±  1,229   ms/op
-BenchmarksLab1.karatsubaMulLongNumbers  sample     60   34,335 ±  1,675   ms/op
+BenchmarksLab1.strassenMulLongNumbers1024   sample    129  167231,615 ± 1635,109   us/op
+BenchmarksLab1.strassenMulLongNumbers768    sample    259   79792,990 ±  694,283   us/op
 
-BenchmarksLab1.mulBigIntegers           sample  32729    0,008 ±  0,001   ms/op
-BenchmarksLab1.karatsubaMulBigIntegers  sample  27695    0,009 ±  0,001   ms/op
-BenchmarksLab1.toomCookMulBigIntegers   sample  22329    0,011 ±  0,001   ms/op
+BenchmarksLab1.toomCookMulBigIntegers1024   sample  24460       0,710 ±    0,070   us/op
+BenchmarksLab1.toomCookMulBigIntegers768    sample  29400       0,559 ±    0,010   us/op
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
-BenchmarksLab1.mulBigDecimals           sample  29754    0,008 ±  0,001   ms/op
-BenchmarksLab1.mulLargeIntegers         sample  21488    0,051 ±  0,004   ms/op
-
-----------------------------------------------------------------------------------
-* All results are printed in MILLISECONDS
-
-* Throughput("thrpt")   - Measures the number of operations per second, meaning the number of times per second your benchmark method could be executed.
-* Sample Time("sample") - Measures how long time it takes for the benchmark method to execute, including max, min time etc.
+* All results are printed in MICROSECONDS
+* Sample Time("sample") - Measures how long time it takes for the benchmark method to
+                          execute, including max, min time etc.

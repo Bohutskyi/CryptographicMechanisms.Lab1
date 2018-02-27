@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import static lab1.test.BenchmarksLab1.LongNumberState.*;
 import static lab1.test.BenchmarksLab1.generatePerformanceResults;
 
 public class AppLab1 {
@@ -29,9 +30,15 @@ public class AppLab1 {
             executeMulOperation(first, second);
 
         } else if (args.length == 1 && "Statistics".equalsIgnoreCase(args[0])) {
-            System.out.println("Statistics will be generated for next inputs: \n"
-                    + "First: " + BenchmarksLab1.MyState.first.hex() + "\n"
-                    + "Second: " + BenchmarksLab1.MyState.second.hex() + "\n");
+            first768.setRandomValues();
+            second768.setRandomValues();
+            first1024.setRandomValues();
+            second1024.setRandomValues();
+            System.out.println("Statistics will be generated for next randomly generated inputs: \n"
+                    + "768-bits sized First: " + first768.hex() + "\n"
+                    + "768-bits sized Second: " + second768.hex() + "\n"
+                    + "1024-bits sized First: " + first1024.hex() + "\n"
+                    + "1024-bits sized Second: " + second1024.hex() + "\n");
             try {
                 generatePerformanceResults();
             } catch (RunnerException e) {
@@ -39,11 +46,21 @@ public class AppLab1 {
             }
 
         } else {
+            first = new LongNumber(768);
+            second = new LongNumber(768);
+            first.setRandomValues();
+            second.setRandomValues();
+
+            System.out.println("----Results fot operands with size of 768 bits--------------------------");
+            System.out.println("First input: " + first.hex());
+            System.out.println("Second input: " + second.hex() + "\n");
+            executeMulOperation(first, second);
+
+            System.out.println("----Results fot operands with size of 1024 bits--------------------------");
             first = new LongNumber(1024);
             second = new LongNumber(1024);
             first.setRandomValues();
             second.setRandomValues();
-
             System.out.println("First input: " + first.hex());
             System.out.println("Second input: " + second.hex() + "\n");
             executeMulOperation(first, second);
@@ -67,6 +84,10 @@ public class AppLab1 {
 
         String customKaratsubaMulResult = LongNumber.Karatsuba(firstInput, secondInput).hex();
         System.out.println("* Custom Multiplication using Karatsuba algorithm: \n" + customKaratsubaMulResult);
+        System.out.println(DELIMITER);
+
+        String customStrassenMulResult = LongNumber.SchonhageStrassenMul(firstInput, secondInput).hex();
+        System.out.println("* Custom Multiplication using Schönhage–Strassen_algorithm: \n" + customStrassenMulResult);
         System.out.println(DELIMITER);
 
         // BigInteger multiplication
@@ -97,5 +118,6 @@ public class AppLab1 {
         // LargeNumber multiplication
         BigInteger bigInteger = new BigInteger(firstLargeNumber.times(secondLargeNumber).toText().toString(), 10);
         System.out.println("* LargeInteger Multiplication: \n" + bigInteger.toString(16).toUpperCase());
+        System.out.println();
     }
 }

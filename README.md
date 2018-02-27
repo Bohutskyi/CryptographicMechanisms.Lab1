@@ -29,7 +29,7 @@ You need to use installation steps from [here](https://docs.oracle.com/cd/E19182
 
 1. master/src/main/java/lab1/LongNumber.java - custom implementation for long arithmetic
 2. master/src/main/java/lab1/test/AppLab1.java  & BenchmarksLab1.java - LongNumber algorithms performance tests and results comparison to (Java built-in) BigInteger ones 
-3. master/src/main/java/lab1/test/StatResults - LongNumber and BigInteger performance results
+3. master/src/main/java/lab1/test/StatResults - performance results
 4. master/src/main/java/lab1/test/BigIntegerMulAlgorithms - BigInteger algorithms (package java.math)
 5. master/src/main/java/lab1/test/BigDecimalMulAlgorithm - BigDecimal algorithms (package java.math)
 6. master/src/main/java/lab1/test/LargeIntegerMulAlgorithm - LargeNumber algorithms (package org.jscience.mathematics.number)

@@ -749,12 +749,42 @@ public class LongNumber {
         return temp;
     }
 
-    public static LongNumber getM(LongNumber n) throws SubtractionException {
-        String s = Integer.toHexString(2 * n.getSize());
-        LongNumber m = LongNumber.LongPower1(new LongNumber("10"), new LongNumber(s));
-        m = LongNumber.LongDivMod(m ,n).getFirst();
-        return m;
-    }
+//    public static LongNumber getM(LongNumber n) throws SubtractionException {
+//        String s = Integer.toHexString(2 * n.getSize());
+//        LongNumber m = LongNumber.LongPower1(new LongNumber("10"), new LongNumber(s));
+//        m = LongNumber.LongDivMod(m ,n).getFirst();
+//        return m;
+//    }
+
+    /**
+     * Power by module operation.
+     *
+     * @param A first operand
+     * @param B second operand
+     * @param N module
+     * @return A^B mon N
+     * @throws SubtractionException method uses BarrettReduction which may throw this exception
+     */
+//    public static LongNumber LongModPowerBarrett(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
+//        LongNumber C = new LongNumber(1);
+//        C.clear(1);
+//
+//        LongNumber mu = LongNumber.getM(N);
+//
+//        StringBuilder s = new StringBuilder(B.toBinaryString());
+//        while (s.charAt(0) == 0 && s.length() != 1) {
+//            s.replace(0, 1, "");
+//        }
+//        int m = s.toString().length();
+//
+//        for (int i = m - 1; i >= 0; i--) {
+//            if (s.charAt(i) == '1') {
+//                C = LongNumber.BarrettReduction(LongNumber.LongMul(C, A), N, mu);
+//            }
+//            A = LongNumber.BarrettReduction(LongNumber.LongMul(A, A), N, mu);
+//        }
+//        return C;
+//    }
 
     /**
      * Barrett reduction.
@@ -767,58 +797,28 @@ public class LongNumber {
      * @param m additional factor
      * @throws SubtractionException method uses LongSub method which may throw this exception
      */
-    public static LongNumber BarrettReduction(LongNumber x, LongNumber n, LongNumber m) throws SubtractionException {
-        int k = n.getSize();
-
-        LongNumber q = LongNumber.KillLastDigits(x, k - 1);
-        if (q.array.size() == 0) {
-            q.array.add(0);
-        }
-
-        q = LongNumber.LongMul(q, m);
-        q = LongNumber.KillLastDigits(q, k + 1);
-
-        if (q.array.size() == 0) {
-            q.array.add(0);
-        }
-
-        LongNumber temp = LongNumber.LongMul(q, n);
-        LongNumber r = LongNumber.LongSub(x, temp).getLongNumber();
-        while (LongNumber.LongCmp(r, n) != -1) {
-            r = LongNumber.LongSub(r, n).getLongNumber();
-        }
-        return r;
-    }
-
-    /**
-     * Power by module operation.
-     *
-     * @param A first operand
-     * @param B second operand
-     * @param N module
-     * @return A^B mon N
-     * @throws SubtractionException method uses BarrettReduction which may throw this exception
-     */
-    public static LongNumber LongModPowerBarrett(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
-        LongNumber C = new LongNumber(1);
-        C.clear(1);
-
-        LongNumber mu = LongNumber.getM(N);
-
-        StringBuilder s = new StringBuilder(B.toBinaryString());
-        while (s.charAt(0) == 0 && s.length() != 1) {
-            s.replace(0, 1, "");
-        }
-        int m = s.toString().length();
-
-        for (int i = m - 1; i >= 0; i--) {
-            if (s.charAt(i) == '1') {
-                C = LongNumber.BarrettReduction(LongNumber.LongMul(C, A), N, mu);
-            }
-            A = LongNumber.BarrettReduction(LongNumber.LongMul(A, A), N, mu);
-        }
-        return C;
-    }
+//    public static LongNumber BarrettReduction(LongNumber x, LongNumber n, LongNumber m) throws SubtractionException {
+//        int k = n.getSize();
+//
+//        LongNumber q = LongNumber.KillLastDigits(x, k - 1);
+//        if (q.array.size() == 0) {
+//            q.array.add(0);
+//        }
+//
+//        q = LongNumber.LongMul(q, m);
+//        q = LongNumber.KillLastDigits(q, k + 1);
+//
+//        if (q.array.size() == 0) {
+//            q.array.add(0);
+//        }
+//
+//        LongNumber temp = LongNumber.LongMul(q, n);
+//        LongNumber r = LongNumber.LongSub(x, temp).getLongNumber();
+//        while (LongNumber.LongCmp(r, n) != -1) {
+//            r = LongNumber.LongSub(r, n).getLongNumber();
+//        }
+//        return r;
+//    }
 
     /**
      * Addition by module.
@@ -828,11 +828,11 @@ public class LongNumber {
      * @return (A + B) mod N
      * @throws SubtractionException method uses BarrettReduction which may throw this exception
      */
-    public static LongNumber LongAddMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
-        LongNumber result = LongNumber.LongAdd(A, B);
-        result = LongNumber.BarrettReduction(result, N, LongNumber.getM(N));
-        return result;
-    }
+//    public static LongNumber LongAddMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
+//        LongNumber result = LongNumber.LongAdd(A, B);
+//        result = LongNumber.BarrettReduction(result, N, LongNumber.getM(N));
+//        return result;
+//    }
 
     /**
      * Subtraction by module.
@@ -843,25 +843,25 @@ public class LongNumber {
      * @return (A - B) mod N
      * @throws SubtractionException method uses BarrettReduction which may throw this exception
      */
-    public static LongNumber LongSubMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
-        if (LongNumber.LongCmp(A, B) == 0) {
-            return new LongNumber("0");
-        }
-        LongNumber result;
-        if (LongNumber.LongCmp(A, B) == 1) {
-            result = LongNumber.LongSub(A, B).getLongNumber();
-            result = LongNumber.BarrettReduction(result, N, LongNumber.getM(N));
-        } else {
-            result = LongNumber.LongSub(B, A).getLongNumber();
-            result = LongNumber.BarrettReduction(result, N, LongNumber.getM(N));
-            result = LongNumber.LongSub(N, result).getLongNumber();
-        }
-
-        if (LongNumber.LongCmp(result, N) == 1) {
-            result = LongNumber.LongSub(result, N).getLongNumber();
-        }
-        return result;
-    }
+//    public static LongNumber LongSubMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
+//        if (LongNumber.LongCmp(A, B) == 0) {
+//            return new LongNumber("0");
+//        }
+//        LongNumber result;
+//        if (LongNumber.LongCmp(A, B) == 1) {
+//            result = LongNumber.LongSub(A, B).getLongNumber();
+//            result = LongNumber.BarrettReduction(result, N, LongNumber.getM(N));
+//        } else {
+//            result = LongNumber.LongSub(B, A).getLongNumber();
+//            result = LongNumber.BarrettReduction(result, N, LongNumber.getM(N));
+//            result = LongNumber.LongSub(N, result).getLongNumber();
+//        }
+//
+//        if (LongNumber.LongCmp(result, N) == 1) {
+//            result = LongNumber.LongSub(result, N).getLongNumber();
+//        }
+//        return result;
+//    }
 
     /**
      * Multiplication by module.
@@ -872,26 +872,26 @@ public class LongNumber {
      * @return (A*B) mod N
      * @throws SubtractionException method uses BarrettReduction which may throw this exception
      */
-    public static LongNumber LongMulMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
-        String s = B.toBinaryString();
-        LongNumber m = LongNumber.getM(N);
-        LongNumber power = new LongNumber("1");
-        LongNumber result = new LongNumber(1);
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (s.charAt(i) == '1') {
-                LongNumber temp = LongNumber.BarrettReduction(LongNumber.LongMul(A, power), N, m);
-                result = LongNumber.LongAdd(result, temp);
-//                result = LongNumber.BarrettReduction(result, N, m);
-            }
-            power = LongNumber.LeftMove(power);
-            while (power.array.get(0) == 0 && power.getSize() != 1) {
-                power.array.remove(0);
-            }
-        }
-
-        result = LongNumber.BarrettReduction(result, N, m);
-        return result;
-    }
+//    public static LongNumber LongMulMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
+//        String s = B.toBinaryString();
+//        LongNumber m = LongNumber.getM(N);
+//        LongNumber power = new LongNumber("1");
+//        LongNumber result = new LongNumber(1);
+//        for (int i = s.length() - 1; i >= 0; i--) {
+//            if (s.charAt(i) == '1') {
+//                LongNumber temp = LongNumber.BarrettReduction(LongNumber.LongMul(A, power), N, m);
+//                result = LongNumber.LongAdd(result, temp);
+////                result = LongNumber.BarrettReduction(result, N, m);
+//            }
+//            power = LongNumber.LeftMove(power);
+//            while (power.array.get(0) == 0 && power.getSize() != 1) {
+//                power.array.remove(0);
+//            }
+//        }
+//
+//        result = LongNumber.BarrettReduction(result, N, m);
+//        return result;
+//    }
 
     //--------------Karatsuba---------------
 

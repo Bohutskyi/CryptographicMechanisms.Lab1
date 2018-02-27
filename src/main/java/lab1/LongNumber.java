@@ -259,12 +259,12 @@ public class LongNumber {
             C.array.add(0, carry & 15);
             carry = carry >> 4;
         }
+        C.removeZerosFromBegin();
         return C;
     }
 
     /**
      * Subtraction operation.
-     *
      *
      * @param A first operand
      * @param B subtrahend
@@ -362,6 +362,7 @@ public class LongNumber {
                 carry = carry >> 4;
             }
         }
+        C.removeZerosFromBegin();
         return C;
     }
 
@@ -557,6 +558,9 @@ public class LongNumber {
 
     //Піднесення до степеня
     public static LongNumber LongPower1(LongNumber A, LongNumber B) {
+//        if (B.hex().equals("0")) {
+//            return new LongNumber("1");
+//        }
         LongNumber C = new LongNumber(1);
         C.clear(1);
         StringBuilder b = new StringBuilder(B.toBinaryString());
@@ -752,8 +756,17 @@ public class LongNumber {
         return m;
     }
 
-    //Редукція за Барреттом, r = x mod n
-    //|n| = k, |x| = 2*k
+    /**
+     * Barrett reduction.
+     *
+     * r = x mod n.
+     * |n| = k, |x| = 2*k.
+     *
+     * @param x first operand
+     * @param n module
+     * @param m additional factor
+     * @throws SubtractionException method uses LongSub method which may throw this exception
+     */
     public static LongNumber BarrettReduction(LongNumber x, LongNumber n, LongNumber m) throws SubtractionException {
         int k = n.getSize();
 
@@ -778,7 +791,13 @@ public class LongNumber {
     }
 
     /**
+     * Power by module operation.
+     *
+     * @param A first operand
+     * @param B second operand
+     * @param N module
      * @return A^B mon N
+     * @throws SubtractionException method uses BarrettReduction which may throw this exception
      */
     public static LongNumber LongModPowerBarrett(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
         LongNumber C = new LongNumber(1);
@@ -802,7 +821,12 @@ public class LongNumber {
     }
 
     /**
+     * Addition by module.
+     *
+     * @param A first conjunction
+     * @param B second conjunction
      * @return (A + B) mod N
+     * @throws SubtractionException method uses BarrettReduction which may throw this exception
      */
     public static LongNumber LongAddMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
         LongNumber result = LongNumber.LongAdd(A, B);
@@ -811,7 +835,13 @@ public class LongNumber {
     }
 
     /**
+     * Subtraction by module.
+     *
+     * @param A first operand
+     * @param B subtrahend
+     * @param N module
      * @return (A - B) mod N
+     * @throws SubtractionException method uses BarrettReduction which may throw this exception
      */
     public static LongNumber LongSubMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
         if (LongNumber.LongCmp(A, B) == 0) {
@@ -834,7 +864,13 @@ public class LongNumber {
     }
 
     /**
+     * Multiplication by module.
+     *
+     * @param A first multiplier
+     * @param B second multiplier
+     * @param N module
      * @return (A*B) mod N
+     * @throws SubtractionException method uses BarrettReduction which may throw this exception
      */
     public static LongNumber LongMulMod(LongNumber A, LongNumber B, LongNumber N) throws SubtractionException {
         String s = B.toBinaryString();
@@ -859,7 +895,14 @@ public class LongNumber {
 
     //--------------Karatsuba---------------
 
-    public static LongNumber getFirstPart(LongNumber a) {
+    /**
+     * Gets first part of LongNumber.
+     * Need it for Karatsuba multiplication.
+     *
+     * @param a LongNumber which first part need to get
+     * @return LongNumber which if first part of a
+     */
+    private static LongNumber getFirstPart(LongNumber a) {
         int k = a.getSize() / 2;
         LongNumber result = new LongNumber(k);
         for (int i = 0; i < k; i++) {
@@ -868,7 +911,14 @@ public class LongNumber {
         return result;
     }
 
-    public static LongNumber getSecondPart(LongNumber a) {
+    /**
+     * Gets second part of LongNumber.
+     * Need it for Karatsuba multiplication.
+     *
+     * @param a LongNumber which second part need to get
+     * @return LongNumber which if second part of a
+     */
+    private static LongNumber getSecondPart(LongNumber a) {
         int k = a.getSize() / 2;
         LongNumber result = new LongNumber(k);
         for (int i = 0; i < k; i++) {
@@ -877,6 +927,13 @@ public class LongNumber {
         return result;
     }
 
+    /**
+     * Karatsuba multiplication.
+     *
+     * @param X first multiplier
+     * @param Y second multiplier
+     * @return X * Y
+     */
     public static LongNumber Karatsuba(LongNumber X, LongNumber Y) {
         while (X.getSize() > Y.getSize()) {
             Y.array.add(0, 0);
@@ -908,5 +965,89 @@ public class LongNumber {
         result = LongNumber.LongAdd(result, temp3);
         return result;
     }
+
+    /**
+     * Schönhage–Strassen algorithm.
+     *
+     * https://en.wikipedia.org/wiki/Schönhage–Strassen_algorithm
+     *
+     * @param A first multiplier
+     * @param B second multiplier
+     * @return a * b
+     */
+    public static LongNumber SchonhageStrassenMul(LongNumber A, LongNumber B) {
+        LongNumber a = A.copy(), b = B.copy();
+        int[] linearConvolution = new int[a.getSize() + b.getSize() - 1];
+        for (int i = 0, n = linearConvolution.length; i < n; ++i) {
+            linearConvolution[i] = 0;
+        }
+
+        LongNumber temp = a.copy();
+        for (int i = 0, n = b.getSize(); i < n; ++i) {
+            a = temp.copy();
+            for (int j = 0, m = a.getSize(); j < m; ++j) {
+                linearConvolution[i + j] += a.getNumber(a.getSize() - 1) * b.getNumber(b.getSize() - 1);
+//                a = quickDivideOn16(a);
+                a.array.remove(a.array.size() - 1);
+            }
+//            b = quickDivideOn16(b);
+            b.array.remove(b.array.size() - 1);
+        }
+
+        //merge
+        LongNumber
+                result = new LongNumber("0"),
+                base = new LongNumber("1");
+        int carry = 0;
+        for (int i = 0, n = linearConvolution.length; i < n; ++i) {
+            linearConvolution[i] += carry;
+            result = LongAdd(result, LongMulOneDigit(base, linearConvolution[i] % 16));
+            carry = linearConvolution[i] / 16;
+//            base = quickMultiplyOn16(base);
+            base.array.add(base.array.size(), 0);
+        }
+        if (carry != 0) {
+            result = LongAdd(result, LongMulOneDigit(base, carry));
+        }
+//        while (result.array.get(0) == 0) {
+//            result.array.remove(0);
+//        }
+        result.removeZerosFromBegin();
+
+        return result;
+    }
+
+    /**
+     * Quick divide on 16.
+     * Just remove last digit from number.
+     *
+     * @param source LongNumber which would be divided
+     * @return source / 16
+     */
+    private static LongNumber quickDivideOn16(LongNumber source) {
+        LongNumber temp = source.copy();
+        temp.array.remove(source.getSize() - 1);
+        return temp;
+    }
+
+    /**
+     * Quick multiply on 16.
+     * Just add zero to the end.
+     *
+     * @param source LongNumber which would be multiplied
+     * @return source * 16
+     */
+    private static LongNumber quickMultiplyOn16(LongNumber source) {
+        LongNumber temp = source.copy();
+        temp.array.add(source.array.size(), 0);
+        return temp;
+    }
+
+    private void removeZerosFromBegin() {
+        while (this.getSize() > 1 && this.array.get(0) == 0) {
+            this.array.remove(0);
+        }
+    }
+
 
 }

@@ -12,7 +12,6 @@ public class Test2 {
 //        mulTest(500, 20);
 //        GCDTest(200, 20);
 //        divisionTest(500, 20);
-//        BarretTest(150, 2);
 //        mulDigitTest(5000, 20);
 //        KaratsubaTest(500, 20);
 //        SchonhageStrassenMultiplicationTest(500, 20);
@@ -274,43 +273,6 @@ public class Test2 {
                     }
                 } catch (SubtractionException e) {
                     System.out.println(e.getMessage());
-                }
-            }
-        }
-        System.out.println("Test completed:\n" + testCount + " tests, " + failures + " failed.");
-    }
-
-    //mod
-    private static void BarretTest(int roundCount, int roundLength) {
-        System.out.println("Test for Barret started.");
-        LongNumber l1, l2;
-        BigInteger b1, b2;
-        long
-                testCount = 0,
-                failures = 0;
-        for (int i = 10; i < roundCount; ++i) {
-//            if (i % 10 == 0)
-            System.out.println(i);
-            for (int j = 0; j < roundLength; ++j) {
-                testCount++;
-                l1 = new LongNumber(2 * i);
-                l2 = new LongNumber(i);
-                l1.setRandomValues();
-                l2.setRandomValues();
-                b1 = new BigInteger(l1.hex(), 16);
-                b2 = new BigInteger(l2.hex(), 16);
-                try {
-                    if (!LongNumber.BarrettReduction(l1, l2, LongNumber.getM(l2)).hex().equals(b1.mod(b2).toString(16).toUpperCase())) {
-                        failures++;
-                        System.out.println("---ERROR---");
-                        System.out.println(l1.hex());
-                        System.out.println(l2.hex());
-                        System.out.println(LongNumber.BarrettReduction(l1, l2, LongNumber.getM(l2)).hex());
-                        System.out.println(b1.mod(b2).toString(16));
-                    }
-                } catch (SubtractionException e) {
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
                 }
             }
         }

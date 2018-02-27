@@ -113,12 +113,6 @@ public class Test {
         System.out.println(second.hex());
         System.out.println(third.hex());
 
-        try {
-            System.out.println(LongNumber.LongModPowerBarrett(first, second, third).hex());
-        } catch (SubtractionException e) {
-            System.out.println(e.getMessage());
-        }
-
         test1 = new BigInteger(first.hex(), 16);
         test2 = new BigInteger(second.hex(), 16);
         BigInteger test3 = new BigInteger(third.hex(), 16);

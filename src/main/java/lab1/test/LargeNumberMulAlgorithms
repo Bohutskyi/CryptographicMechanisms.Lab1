@@ -1,0 +1,172 @@
+
+---- BigDecimal attribute ------------------------------------------------------------------
+
+    /**
+     * The size of this large integer in words.
+     * The most significand word different from 0 is at index: _size-1
+     */
+    private int _size;
+
+    /**
+     * Indicates if this large integer is negative.
+     */
+    private boolean _isNegative;
+
+    /**
+     * This large integer positive words (63 bits).
+     * Least significant word first (index 0).
+     */
+    private long[] _words;
+
+
+---- Constant that was used internally -----------------------------------------------------
+
+    /**
+     * Holds factory for LargeInteger with variable size arrays.
+     */
+    private static final ArrayFactory<LargeInteger> ARRAY_FACTORY = new ArrayFactory<LargeInteger>() {
+
+        @Override
+        protected LargeInteger create(int capacity) {
+            return new LargeInteger(capacity);
+        }
+
+    };
+
+
+---- Multiplication method -----------------------------------------------------------------
+
+   /**
+     * Returns the product of this large integer with the one specified.
+     *
+     * @param that the large integer multiplier.
+     * @return <code>this · that</code>.
+     */
+    public LargeInteger times(LargeInteger that) {
+        if (that._size > this._size) // Always multiply the smallest to the largest.
+            return that.times(this);
+        if (that._size <= 1) // Direct times(long) multiplication.
+            return this.times(that.longValue());
+        if (that._size < 10) { // Conventional multiplication.
+            LargeInteger li = ARRAY_FACTORY.array(this._size + that._size);
+            li._size = Calculus.multiply(this._words, this._size, that._words,
+                    that._size, li._words);
+            li._isNegative = (this._isNegative != that._isNegative);
+            return li;
+        } else if (that._size < 20) { // Karatsuba (sequential).
+            int n = (that._size >> 1) + (that._size & 1);
+            // this = a + 2^(n*63) b, that = c + 2^(n*63) d
+            LargeInteger b = this.high(n);
+            LargeInteger a = this.low(n);
+            // Optimization for square (a == c, b == d).
+            LargeInteger d = (this == that) ? b : that.high(n);
+            LargeInteger c = (this == that) ? a : that.low(n);
+            LargeInteger ab = a.plus(b);
+            LargeInteger cd = (this == that) ? ab : c.plus(d);
+            LargeInteger abcd = ab.times(cd);
+            LargeInteger ac = a.times(c);
+            LargeInteger bd = b.times(d);
+            // li = a*c + ((a+b)*(c+d)-(a*c+b*d)) 2^n + b*d 2^2n
+            return ac.plus(abcd.minus(ac.plus(bd)).shiftWordLeft(n)).plus(
+                    bd.shiftWordLeft(n << 1));
+        } else { // Karatsuba (concurrent).
+            int n = (that._size >> 1) + (that._size & 1);
+            // this = a + 2^(63*n) b, that = c + 2^(63*n) d
+            LargeInteger b = this.high(n);
+            LargeInteger a = this.low(n);
+            // Optimization for square (a == c, b == d).
+            LargeInteger d = (this == that) ? b : that.high(n);
+            LargeInteger c = (this == that) ? a : that.low(n);
+            LargeInteger ab = a.plus(b);
+            LargeInteger cd = (this == that) ? ab : c.plus(d);
+            MultiplyLogic abcd = MultiplyLogic.newInstance(ab, cd);
+            MultiplyLogic ac = MultiplyLogic.newInstance(a, c);
+            MultiplyLogic bd = MultiplyLogic.newInstance(b, d);
+            ConcurrentContext.enter();
+            try { // this = a + 2^n b,   that = c + 2^n d
+                ConcurrentContext.execute(abcd);
+                ConcurrentContext.execute(ac);
+                ConcurrentContext.execute(bd);
+            } finally {
+                ConcurrentContext.exit();
+            }
+            // result = a*c + ((a+b)*(c+d)-(a*c+b*d)) 2^n + b*d 2^2n
+            LargeInteger result = ac.value().plus(
+                    abcd.value().minus(ac.value().plus(bd.value()))
+                            .shiftWordLeft(n)).plus(
+                    bd.value().shiftWordLeft(n << 1));
+            return result;
+        }
+    }
+
+    private LargeInteger high(int w) { // this.shiftRight(w * 63)
+        LargeInteger li = ARRAY_FACTORY.array(_size - w);
+        li._isNegative = _isNegative;
+        li._size = _size - w;
+        System.arraycopy(_words, w, li._words, 0, _size - w);
+        return li;
+    }
+
+    private LargeInteger low(int w) { // this.minus(high(w).shiftLeft(w * 63));
+        LargeInteger li = NO_ARRAY_FACTORY.object();
+        li._words = _words;
+        li._isNegative = _isNegative;
+        for (int i = w; i > 0; i--) {
+            if (_words[i - 1] != 0) {
+                li._size = i;
+                return li;
+            }
+        } // Else zero.
+        return LargeInteger.ZERO;
+    }
+
+
+    private LargeInteger shiftWordLeft(int w) { // this.minus(high(w).shiftLeft(w * 63));
+        if (_size == 0)
+            return LargeInteger.ZERO;
+        LargeInteger li = ARRAY_FACTORY.array(w + _size);
+        li._isNegative = _isNegative;
+        li._size = w + _size;
+        for (int i = 0; i < w;) {
+            li._words[i++] = 0;
+        }
+        System.arraycopy(_words, 0, li._words, w, _size);
+        return li;
+    }
+
+    /**
+     * Returns the difference between this large integer and the one
+     * specified.
+     *
+     * @param that the integer to be subtracted.
+     * @return <code>this - that</code>.
+     */
+    public LargeInteger minus(LargeInteger that) {
+        if ((this._isNegative != that._isNegative) && (that._size != 0))
+            return this.plus(that.opposite()); // Switches that sign.
+        if (that.isLargerThan(this)) // Always subtract the smallest to the largest.
+            return that.minus(this).opposite();
+        LargeInteger li = ARRAY_FACTORY.array(this._size);
+        li._size = Calculus.subtract(_words, _size, that._words, that._size,
+                li._words);
+        li._isNegative = this._isNegative && (li._size != 0);
+        return li;
+    }
+
+    /**
+     * Returns the sum of this large integer with the one specified.
+     *
+     * @param that the integer to be added.
+     * @return <code>this + that</code>.
+     */
+    public LargeInteger plus(LargeInteger that) {
+        if (this._size < that._size) // Adds smallest in size to largest.
+            return that.plus(this);
+        if ((this._isNegative != that._isNegative) && (that._size != 0))
+            return this.minus(that.opposite()); // Switches that sign.
+        LargeInteger li = ARRAY_FACTORY.array(_size + 1);
+        li._size = Calculus.add(_words, _size, that._words, that._size,
+                li._words);
+        li._isNegative = _isNegative;
+        return li;
+    }

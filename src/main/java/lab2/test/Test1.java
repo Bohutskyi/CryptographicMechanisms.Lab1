@@ -1,5 +1,6 @@
 package lab2.test;
 
+import lab2.IncorrectInputException;
 import lab2.MillerRabinTest;
 
 import java.math.BigInteger;
@@ -18,8 +19,12 @@ public class Test1 {
 
 
     public static void main(String[] args) {
-//        MillerRabinTest();
-        MaurerTest();
+        MillerRabinTest();
+        try {
+            MaurerTest();
+        } catch (IncorrectInputException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     //Test for Miller-Rabin algorithm
@@ -52,7 +57,7 @@ public class Test1 {
     }
 
     //Test for Maurer algorithm
-    private static void MaurerTest() {
+    private static void MaurerTest() throws IncorrectInputException {
         printDate();
         System.out.println("Test for Maurer algorithm was started.");
         long

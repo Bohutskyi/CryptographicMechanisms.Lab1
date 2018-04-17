@@ -1,6 +1,7 @@
 package lab2;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class Maurer {
@@ -19,8 +20,21 @@ public class Maurer {
      * @param M parameter that guarantees the existence of the prime number. Recommend M = 20
      * @return Probable prime BigInteger
      */
-    public static BigInteger MaurerGeneration(int k, final int L, final int M) {
-        Random random = new Random();
+    public static BigInteger MaurerGeneration(int k, final int L, final int M) throws IncorrectInputException {
+//        Random random = new Random();
+        SecureRandom random = new SecureRandom();
+
+        if (k == 1) {
+            throw new IncorrectInputException("number of bits must be more than 1");
+        }
+
+        if (L <= 0) {
+            throw new IncorrectInputException("prime check constant must be positive");
+        }
+
+        if (M <= 0) {
+            throw new IncorrectInputException("parameter that guarantees the existence of the prime number must be positive");
+        }
 
         if (k <= 20) {
             BigInteger n;

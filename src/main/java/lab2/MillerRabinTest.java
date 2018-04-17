@@ -23,14 +23,22 @@ public class MillerRabinTest {
         return result;
     }
 
-    public static boolean isProbablePrime(BigInteger p, int k) {
+    public static boolean isProbablePrime(BigInteger p, int certainty) {
+        if (p.compareTo(BigInteger.ONE) != 1) {
+            return false;
+        }
+
+        if (certainty <= 0) {
+            return true;
+        }
+
         int s = 0;
         BigInteger d;
         for (d = p.subtract(BigInteger.ONE); d.mod(MillerRabinTest.BIGINTEGERCONST.TWO).equals(BigInteger.ZERO); ++s) {
             d = d.divide(MillerRabinTest.BIGINTEGERCONST.TWO);
         }
 
-        for (int i = 0; i < k; i++) {
+        for (int i = 0; i < certainty; i++) {
             BigInteger x = randomBigInteger(p);
             if (!GCD.gcd(x, p).getGcd().equals(BigInteger.ONE)) {
                 return false;

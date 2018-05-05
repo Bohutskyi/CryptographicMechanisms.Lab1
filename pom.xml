@@ -40,7 +40,18 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>random-tests</id>
+            <url>file:///extLibs</url>
+        </repository>
+    </repositories>
     <dependencies>
+        <dependency>
+            <groupId>net.stamfest</groupId>
+            <artifactId>randomtests</artifactId>
+            <version>0.9-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>

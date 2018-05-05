@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea19bfad-cdd6-4df1-bfec-ba2422b5b8c4" name="Default" comment="" />
+    <list default="true" id="ea19bfad-cdd6-4df1-bfec-ba2422b5b8c4" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__args4j_args4j_2_33.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_wendykierp_JTransforms_with_dependencies_3_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_stamfest_randomtests_0_9_SNAPSHOT.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__pl_edu_icm_JLargeArrays_1_5.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_math3_3_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_math3_3_5.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/juliet_test_suite_1_2_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/Labs.iml" afterPath="$PROJECT_DIR$/Labs.iml" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/BenchmarkList" afterPath="$PROJECT_DIR$/target/classes/META-INF/BenchmarkList" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/CompilerHints" afterPath="$PROJECT_DIR$/target/classes/META-INF/CompilerHints" />
+    </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -12,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="NistTests.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NistTests.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/lab2/test/nist/NistTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="954">
-              <caret line="64" column="12" lean-forward="true" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="12" />
+            <state relative-caret-position="306">
+              <caret line="52" column="6" lean-forward="true" selection-start-line="52" selection-start-column="6" selection-end-line="52" selection-end-column="6" />
               <folding>
                 <element signature="e#11835#11836#0" expanded="true" />
                 <element signature="e#11901#11902#0" expanded="true" />
@@ -25,11 +37,39 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ApproximateEntropy.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../randomtests/target/randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar!/net/stamfest/randomtests/nist/ApproximateEntropy.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+              <folding>
+                <marker date="1522093196075" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1522093196075" expanded="false" signature="153:263" ph="..." />
+                <marker date="1522093196075" expanded="true" signature="479:577" ph="{...}" />
+                <marker date="1522093196075" expanded="true" signature="615:2630" ph="{...}" />
+                <marker date="1522093196075" expanded="true" signature="2690:4295" ph="{...}" />
+                <marker date="1522093196075" expanded="false" signature="4340:4351" ph=" { " />
+                <marker date="1522093196075" expanded="false" signature="4378:4384" ph=" }" />
+                <marker date="1522093196075" expanded="false" signature="4420:4431" ph=" { " />
+                <marker date="1522093196075" expanded="false" signature="4493:4499" ph=" }" />
+                <marker date="1522093196075" expanded="true" signature="4569:5069" ph="{...}" />
+                <marker date="1522093196075" expanded="false" signature="4712:4727" ph=" { " />
+                <marker date="1522093196075" expanded="false" signature="4749:4759" ph=" }" />
+                <marker date="1522093196075" expanded="false" signature="4794:4809" ph=" { " />
+                <marker date="1522093196075" expanded="false" signature="4826:4836" ph=" }" />
+                <marker date="1522093196075" expanded="false" signature="4869:4884" ph=" { " />
+                <marker date="1522093196075" expanded="false" signature="4901:4911" ph=" }" />
+                <marker date="1522093196075" expanded="true" signature="4995:5063" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-107">
-              <caret line="51" column="35" lean-forward="true" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
+            <state relative-caret-position="-431">
+              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -79,8 +119,8 @@
         <option value="$PROJECT_DIR$/src/main/java/lab2/test/cwe/CWE336_Same_Seed_in_PRNG.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/test/cwe/CWE337_Predictable_Seed_in_PRNG.java" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/test/cwe/CWE338_Weak_PRNG.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/lab2/test/nist/NistTests.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -109,10 +149,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="75" />
-    <option name="y" value="6" />
-    <option name="width" value="649" />
-    <option name="height" value="736" />
+    <option name="x" value="65" />
+    <option name="y" value="24" />
+    <option name="width" value="1301" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -143,11 +183,6 @@
             <path>
               <item name="labs" type="b2602c69:ProjectViewProjectNode" />
               <item name="CryptographicMechanisms.Labs" type="462c0819:PsiDirectoryNode" />
-              <item name="extLibs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="labs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CryptographicMechanisms.Labs" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -179,16 +214,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="lab2" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="labs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CryptographicMechanisms.Labs" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="cwe" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="labs" type="b2602c69:ProjectViewProjectNode" />
@@ -202,33 +227,15 @@
             </path>
             <path>
               <item name="labs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="CryptographicMechanisms.Labs" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="lab3" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="labs" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="randomtests-0.9-SNAPSHOT-jar-with-dependencies" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="labs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="randomtests-0.9-SNAPSHOT-jar-with-dependencies" type="70bed36:NamedLibraryElementNode" />
-              <item name="randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="labs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="randomtests-0.9-SNAPSHOT-jar-with-dependencies" type="70bed36:NamedLibraryElementNode" />
-              <item name="randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="randomtests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="labs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="randomtests-0.9-SNAPSHOT-jar-with-dependencies" type="70bed36:NamedLibraryElementNode" />
-              <item name="randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="randomtests" type="462c0819:PsiDirectoryNode" />
-              <item name="nist" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -264,7 +271,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.NistTests.UniversalMaurerTest">
+  <component name="RunManager" selected="JUnit.NistTests">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -480,8 +487,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.NistTests.UniversalMaurerTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.NistTests" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.NistTests" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.NistTests.UniversalMaurerTest" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.NistTests.SuiteTest" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.NistTests.RankTest" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.NistTests.NonOverlappingTemplateMatchingTest" />
@@ -505,8 +512,8 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="NistTests_UniversalMaurerTest - 2018.04.24 at 03h 50m 30s.xml">
-      <configuration name="NistTests.UniversalMaurerTest" configurationId="JUnit" />
+    <history-entry file="NistTests - 2018.05.06 at 00h 01m 37s.xml">
+      <configuration name="NistTests" configurationId="JUnit" />
     </history-entry>
     <history-entry file="NistTests_UniversalMaurerTest - 2018.04.24 at 03h 50m 54s.xml">
       <configuration name="NistTests.UniversalMaurerTest" configurationId="JUnit" />
@@ -538,6 +545,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="75" y="6" width="1303" height="780" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -546,13 +554,13 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988048" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36391914" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34661356" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34661356" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -627,21 +635,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/lab2/generators/BBSGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/lab2/generators/L89Generator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/lab2/test/TestJiffyGenerator.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/lab2/test/TetsL20Generator.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/lab2/test/TsetJiffyGenerator.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/lab2/generators/Generator.java">
@@ -775,13 +768,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../randomtests/target/randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar!/net/stamfest/randomtests/nist/ApproximateEntropy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-730">
-          <caret line="21" column="20" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../randomtests/target/randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar!/net/stamfest/randomtests/Suite.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -888,22 +874,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/lab2/test/nist/NistTests.java">
+    <entry file="jar://$PROJECT_DIR$/../randomtests/target/randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar!/META-INF/NOTICE.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="954">
-          <caret line="64" column="12" lean-forward="true" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="12" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../randomtests/target/randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar!/META-INF/LICENSE.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-540">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../randomtests/target/randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar!/META-INF/MANIFEST.MF">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="12" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../randomtests/target/randomtests-0.9-SNAPSHOT-jar-with-dependencies.jar!/net/stamfest/randomtests/nist/ApproximateEntropy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding>
-            <element signature="e#11835#11836#0" expanded="true" />
-            <element signature="e#11901#11902#0" expanded="true" />
+            <marker date="1522093196075" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1522093196075" expanded="false" signature="153:263" ph="..." />
+            <marker date="1522093196075" expanded="true" signature="479:577" ph="{...}" />
+            <marker date="1522093196075" expanded="true" signature="615:2630" ph="{...}" />
+            <marker date="1522093196075" expanded="true" signature="2690:4295" ph="{...}" />
+            <marker date="1522093196075" expanded="false" signature="4340:4351" ph=" { " />
+            <marker date="1522093196075" expanded="false" signature="4378:4384" ph=" }" />
+            <marker date="1522093196075" expanded="false" signature="4420:4431" ph=" { " />
+            <marker date="1522093196075" expanded="false" signature="4493:4499" ph=" }" />
+            <marker date="1522093196075" expanded="true" signature="4569:5069" ph="{...}" />
+            <marker date="1522093196075" expanded="false" signature="4712:4727" ph=" { " />
+            <marker date="1522093196075" expanded="false" signature="4749:4759" ph=" }" />
+            <marker date="1522093196075" expanded="false" signature="4794:4809" ph=" { " />
+            <marker date="1522093196075" expanded="false" signature="4826:4836" ph=" }" />
+            <marker date="1522093196075" expanded="false" signature="4869:4884" ph=" { " />
+            <marker date="1522093196075" expanded="false" signature="4901:4911" ph=" }" />
+            <marker date="1522093196075" expanded="true" signature="4995:5063" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-107">
-          <caret line="51" column="35" lean-forward="true" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
+        <state relative-caret-position="-431">
+          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/lab2/test/nist/NistTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="52" column="6" lean-forward="true" selection-start-line="52" selection-start-column="6" selection-end-line="52" selection-end-column="6" />
+          <folding>
+            <element signature="e#11835#11836#0" expanded="true" />
+            <element signature="e#11901#11902#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -973,7 +1009,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>juliet-test-suite-1.2.0</last-edited>
+          <last-edited>randomtests-0.9-SNAPSHOT-jar-with-dependencies</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

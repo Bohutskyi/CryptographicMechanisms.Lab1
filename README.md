@@ -46,4 +46,3 @@ You need to use installation steps from [here](https://docs.oracle.com/cd/E19182
 
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [JMH](http://openjdk.java.net/projects/code-tools/jmh/) - Harness for building, running, and analysing benchmarks
-* 

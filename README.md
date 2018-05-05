@@ -39,8 +39,8 @@ You need to use installation steps from [here](https://docs.oracle.com/cd/E19182
 
 1. master/src/main/java/lab2/Maurer.java - generates probable prime number with specified number of bits using Maurer algorithm
 2. master/src/main/java/lab2/MillerRabinTest.java - Miller-Rabin primality test: an algorithm which determines whether a given number is prime
-3. master/src/main/java/lab2/test/cwe/*.java - examples from list of common software security weaknesses for SecurityRundom Java built-in class (which is used in testing)
-4. main/java/lab2/test/nist/NistTests.java - set of Statistical Test Suites for the Validation of Random Number Generators and Pseudo Random Number Generators for Cryptographic applied on customly developed Maurer generator
+3. master/src/master/src/main/java/lab2/test/cwe/*.java - examples from list of common software security weaknesses for SecurityRundom Java built-in class (which is used in testing)
+4. master/src/main/java/lab2/test/nist/NistTests.java - set of Statistical Test Suites for the Validation of Random Number Generators and Pseudo Random Number Generators for Cryptographic applied on customly developed Maurer generator
 
 ## Built With
 

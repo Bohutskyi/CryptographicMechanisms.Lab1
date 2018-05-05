@@ -1,6 +1,7 @@
 package lab2.test.nist;
 
 import junit.framework.Assert;
+import lab2.IncorrectInputException;
 import net.stamfest.randomtests.Suite;
 import net.stamfest.randomtests.bits.ArrayBits;
 import net.stamfest.randomtests.bits.Bits;
@@ -24,7 +25,7 @@ public class NistTests {
      * @author NIST / ported by Peter Stamfest
      */
     @Test
-    public void ApproximateEntropyTest() {
+    public void ApproximateEntropyTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(100, 50, 20);
 
     /**
@@ -53,7 +54,7 @@ public class NistTests {
      * @author Peter Stamfest
      */
     @Test
-    public void BlockFrequency5Test() {
+    public void BlockFrequency5Test() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(100, 50, 20);
 
         /**
@@ -70,7 +71,7 @@ public class NistTests {
 
 
     @Test
-    public void BlockFrequency10Test() {
+    public void BlockFrequency10Test() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(100, 50, 20);
 
         BlockFrequency f = new BlockFrequency(10);
@@ -94,7 +95,7 @@ public class NistTests {
      * @author NIST / ported by Peter Stamfest
      */
     @Test
-    public void CumulativeSums() {
+    public void CumulativeSums() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(100, 50, 20);
 
         CumulativeSums cs = new CumulativeSums();
@@ -115,7 +116,7 @@ public class NistTests {
      * @author Peter Stamfest
      */
     @Test
-    public void DiscreteFourierTransformTest() {
+    public void DiscreteFourierTransformTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(100, 50, 20);
 
         DiscreteFourierTransform dft = new DiscreteFourierTransform();
@@ -136,7 +137,7 @@ public class NistTests {
      * @author NIST / ported by Peter Stamfest
      */
     @Test
-    public void FrequencyTest() {
+    public void FrequencyTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(100, 50, 20);
 
         Frequency f = new Frequency();
@@ -155,7 +156,7 @@ public class NistTests {
      * @author NIST / ported by Peter Stamfest
      */
     @Test
-    public void LinearComplexityTest() {
+    public void LinearComplexityTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(1000, 50, 20);
 
         LinearComplexity lc = new LinearComplexity(500);
@@ -188,7 +189,7 @@ public class NistTests {
      * N The number of blocks; selected in accordance with the value of M.
      */
     @Test
-    public void LongestRunOfOnesTest() {
+    public void LongestRunOfOnesTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(256, 50, 20);
 
         LongestRunOfOnes l = new LongestRunOfOnes();
@@ -210,7 +211,7 @@ public class NistTests {
      * @author Peter Stamfest
      */
     @Test
-    public void NonOverlappingTemplateMatchingsTest() {
+    public void NonOverlappingTemplateMatchingTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(500, 50, 20);
 
         NonOverlappingTemplateMatchings n = new NonOverlappingTemplateMatchings(9);
@@ -229,7 +230,7 @@ public class NistTests {
      * @author Peter Stamfest
      */
     @Test
-    public void RankTest() {
+    public void RankTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(2000, 50, 20);
 
         Rank r = new Rank();
@@ -251,7 +252,7 @@ public class NistTests {
      * @author Peter Stamfest
      */
     @Test
-    public void IdenticalBitRunsTest() {
+    public void IdenticalBitRunsTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(2000, 50, 20);
 
         Runs r = new Runs();
@@ -275,7 +276,7 @@ public class NistTests {
      * @author NIST / ported by Peter Stamfest
      */
     @Test
-    public void SerialTest() {
+    public void SerialTest() throws IncorrectInputException {
         BigInteger generatedValue = MaurerGeneration(2000, 50, 20);
 
         Serial s = new Serial(2);
@@ -289,29 +290,7 @@ public class NistTests {
         Assert.assertTrue(s2.isPassed());
     }
 
-    /**
-     * The focus of this test is the number of bits between matching patterns (a
-     * measure that is related to the length of a compressed sequence). The purpose
-     * of the test is to detect whether or not the sequence can be significantly
-     * compressed without loss of information. A significantly compressible sequence
-     * is considered to be non-random.
-     *
-     * @author Peter Stamfest
-     */
-    @Test
-    public void UniversalMaurerTest() {
-        BigInteger generatedValue = MaurerGeneration(4000, 50, 20);
-
-        Universal u = new Universal();
-        Result[] results = u.runTest(convertToBits(generatedValue));
-        u.report(System.out, results);
-
-        Assert.assertTrue(results[0].isPassed());
-    }
-
-
-
-        private ArrayBits convertToBits(BigInteger generatedValue) {
+    private ArrayBits convertToBits(BigInteger generatedValue) {
         return new ArrayBits(generatedValue.toByteArray());
     }
 }

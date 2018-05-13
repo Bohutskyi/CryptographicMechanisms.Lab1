@@ -225,31 +225,132 @@ public class RabinClient {
         return result;
     }
 
-//    public static void main(String[] args) {
-//        RabinClient client = new RabinClient(7, new SecureRandom());
-//        System.out.println(client.p.toString(2));
-//        System.out.println(client.p.isProbablePrime(50));
-//        System.out.println(client.q.toString(2));
-//        System.out.println(client.q.isProbablePrime(50));
-//        System.out.println("----------");
-//
-////
-//        BigInteger message = new BigInteger("908", 10);
-//        System.out.println("n = " + client.getPublicKey().toString(10));
-//        System.out.println("m = " + message.toString(10));
-//        try {
-//            Object[] cipher = client.encrypt(message);
-//            System.out.println("cipher = " + ((BigInteger)cipher[0]).toString(10));
-//            System.out.println("b1 = " + ((int) cipher[1]));
-//            System.out.println("b2 = " + ((int) cipher[2]));
-//            System.out.println("------------");
-//            BigInteger decr = client.decrypt(cipher);
-//            System.out.println(decr.toString(10));
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            e.printStackTrace();
-//        }
-//
-//    }
-    
+    /**
+     * Sign.
+     * Uses Sha256 as hash function.
+     * Sign = hash(message || random sequence) = H. if H is square left mod n, than find any root and forms sign:
+     * (Message, Random Sequence, root).
+     *
+     * @param message BigInteger message to sign
+     * @param randomSequenceLength length of random sequence
+     * @param random random which uses to generate sequence
+     * @return Object array with size = 3
+     */
+    public Object[] sign(BigInteger message, int randomSequenceLength, Random random) {
+        Sha256 sha256 = Sha256.getInstance();
+        StringBuilder concatenation;
+        BigInteger hashBI;
+        String randomSequence;
+
+        do {
+            concatenation = new StringBuilder();
+            concatenation.append(message.toString(16));
+            randomSequence = randomSequence(randomSequenceLength, random);
+            concatenation.append(randomSequence);
+            String hash = Sha256.bytesToHex(sha256.digest(concatenation.toString().getBytes()));
+
+            hashBI = new BigInteger(hash, 16);
+            hashBI = hashBI.mod(n);
+
+        } while (!check(hashBI));
+
+        BigInteger[] sqrtP = sqrtByPrimeMod(hashBI, p),
+                sqrtQ = sqrtByPrimeMod(hashBI, q);
+        BigInteger root = (sqrtP[0].multiply(q).multiply(q.modInverse(p))).add(sqrtQ[0].multiply(p).multiply(p.modInverse(q))).mod(n);
+
+        Object[] result = new Object[3];
+        result[0] = message;
+        result[1] = randomSequence;
+        result[2] = root;
+
+        return result;
+    }
+
+    private boolean check(BigInteger hash) {
+        if (hash.modPow((p.subtract(BigInteger.ONE)).divide(TWO), p).compareTo(BigInteger.ONE) == 0) {
+            if (hash.modPow((q.subtract(BigInteger.ONE)).divide(TWO), q).compareTo(BigInteger.ONE) == 0) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+        return false;
+    }
+
+    /**
+     * Checks sign:
+     * Calculates H = hash(Message || random sequence) and than check if root ^ 2 = H mod n.
+     *
+     * @param sign Object array which contains 3 parameters (Message, random sequence, root)
+     * @throws MessageException if input array size is not 3
+     * @throws MessageException if sign is not correct
+     * @return true if sigh is correct
+     */
+    public boolean checkSign(Object[] sign, RabinClient user) throws MessageException {
+        if (sign.length != 3) {
+            throw new MessageException("sign check must take 3 parameters");
+        }
+
+
+        Sha256 sha256 = Sha256.getInstance();
+        String hashInput = ((BigInteger) sign[0]).toString(16);
+        hashInput += (String) sign[1];
+        String hash = Sha256.bytesToHex(sha256.digest(hashInput.toString().getBytes()));
+
+        BigInteger root = (BigInteger) sign[2];
+
+        if (root.pow(2).mod(user.getPublicKey()).compareTo(new BigInteger(hash, 16).mod(user.getPublicKey())) == 0) {
+            return true;
+        } else {
+            throw new MessageException("hash = " + hash + ", message = " + ((BigInteger) sign[0]).toString(16) + ", sequence = " + (String) sign[1] +
+                    ", root = " + ((BigInteger) sign[2]).toString(16) + ", root ^ 2 = " + root.pow(2).mod(user.getPublicKey()).toString(16) +
+                    ", hash mod n = " + new BigInteger(hash, 16).mod(user.getPublicKey()).toString(16));
+        }
+
+//        return root.pow(2).mod(user.getPublicKey()).compareTo(new BigInteger(hash, 16).mod(user.getPublicKey())) == 0;
+    }
+
+    /**
+     *
+     *
+     * */
+    public void blindSign() {
+
+    }
+
+    /**
+     * Generates random sequence with specified length.
+     *
+     * @param length count of bits in sequence
+     * @param random random which uses to generate sequence
+     * @return String sequence of {0, 1}
+     */
+    private static String randomSequence(int length, Random random) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < length; ++i) {
+            result.append(random.nextInt(2));
+        }
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        Random random = new Random();
+        int count = 0;
+
+        do {
+            ++count;
+            RabinClient client = new RabinClient(512, random);
+
+            BigInteger message = new BigInteger("329041902348920", 16);
+            Object[] sign = client.sign(message, 54, random);
+            RabinClient client2 = new RabinClient(123, random);
+            try {
+                System.out.println(client2.checkSign(sign, client));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } while (count <= 20);
+
+    }
+
 }

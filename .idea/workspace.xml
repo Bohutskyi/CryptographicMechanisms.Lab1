@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da7f259f-b06b-4de8-ad6c-85daa4ee5b03" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/lab3/RabinClient.java" afterPath="$PROJECT_DIR$/src/main/java/lab3/RabinClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/lab3/Sha256.java" afterPath="$PROJECT_DIR$/src/main/java/lab3/Sha256.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/lab3/Test.java" afterPath="$PROJECT_DIR$/src/main/java/lab3/Test.java" />
-    </list>
+    <list default="true" id="da7f259f-b06b-4de8-ad6c-85daa4ee5b03" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,8 +45,8 @@
       <file leaf-file-name="RabinClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/lab3/RabinClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="316" column="26" lean-forward="false" selection-start-line="316" selection-start-column="26" selection-end-line="316" selection-end-column="26" />
+            <state relative-caret-position="245">
+              <caret line="291" column="9" lean-forward="true" selection-start-line="291" selection-start-column="9" selection-end-line="291" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -983,12 +978,12 @@
       <workItem from="1523777838508" duration="7818000" />
       <workItem from="1523908331999" duration="2095000" />
       <workItem from="1524310648052" duration="379000" />
-      <workItem from="1526202900676" duration="8060000" />
+      <workItem from="1526202900676" duration="8435000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88149000" />
+    <option name="totallyTimeSpent" value="88524000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1362,8 +1357,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/lab3/RabinClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="316" column="26" lean-forward="false" selection-start-line="316" selection-start-column="26" selection-end-line="316" selection-end-column="26" />
+        <state relative-caret-position="245">
+          <caret line="291" column="9" lean-forward="true" selection-start-line="291" selection-start-column="9" selection-end-line="291" selection-end-column="9" />
           <folding />
         </state>
       </provider>

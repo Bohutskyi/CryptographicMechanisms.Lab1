@@ -2,6 +2,9 @@ package lab3;
 
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -15,7 +18,9 @@ public class Test {
 
 
     public static void main(String[] args) {
-        RabinTest();
+//        RabinTest();
+//        ShaTest();
+        signTest();
     }
 
     //Test for Rabin system
@@ -51,12 +56,89 @@ public class Test {
         System.out.println("Test completed:\n" + testCount + " tests, " + failures + " (" + format.format((1. * failures / testCount)) + "%) failed.");
     }
 
+    //Test for Sha256
+    private static void ShaTest() {
+        printDate();
+        System.out.println("Test for Sha256 was started.");
+        SecureRandom random = new SecureRandom();
+        long
+                testCount = 0,
+                failures = 0;
+
+        Sha256 sha256 = Sha256.getInstance();
+        for (int i = 100; i <= 1000; i += 100) {
+//            System.out.println(i);
+            for (int j = 0; j < 20; ++j) {
+                String input = randomString(i);
+                try {
+                    ++testCount;
+                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                    byte[] systemHash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+                    byte[] personalHash = sha256.digest(input.getBytes());
+                    if (Sha256.bytesToHex(systemHash).equals(Sha256.bytesToHex(personalHash))) {
+
+                    } else {
+                        ++failures;
+                        System.out.println("Result don't match. Input = " + input + ", system hash = " + Sha256.bytesToHex(systemHash) + ", personal hash = " + Sha256.bytesToHex(personalHash));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        printDate();
+        DecimalFormat format = new DecimalFormat("#.####");
+        format.setRoundingMode(RoundingMode.CEILING);
+        System.out.println("Test completed:\n" + testCount + " tests, " + failures + " (" + format.format((1. * failures / testCount)) + "%) failed.");
+    }
+
+    //Test for Sign
+    private static void signTest() {
+        printDate();
+        System.out.println("Test for sign was started.");
+        SecureRandom random = new SecureRandom();
+        long
+                testCount = 0,
+                failures = 0;
+
+        for (int i = 100; i <= 1000; i += 100) {
+            System.out.println(i);
+            for (int j = 0; j < 2; ++j) {
+                RabinClient client = new RabinClient(i, random);
+                BigInteger message = generateMessage(client.getPublicKey(), i, random);
+
+                try {
+                    ++testCount;
+                    Object[] sign = client.sign(message, i + random.nextInt(250), random);
+                    client.checkSign(sign, client);
+                } catch (MessageException e) {
+                    ++failures;
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
+        printDate();
+        DecimalFormat format = new DecimalFormat("#.####");
+        format.setRoundingMode(RoundingMode.CEILING);
+        System.out.println("Test completed:\n" + testCount + " tests, " + failures + " (" + format.format((1. * failures / testCount)) + "%) failed.");
+    }
+
     private static BigInteger generateMessage(BigInteger n, int bitsNumber, Random random) {
         BigInteger result;
         do {
             result = new BigInteger(bitsNumber + 1, random);
         } while (result.compareTo(n) == -1 && result.compareTo(RabinClient.sqrt(n)) != 1);
         return result;
+    }
+
+    /**
+     * Generates random string with specified length.
+     */
+    private static String randomString(int length) {
+        byte[] array = new byte[length];
+        new Random().nextBytes(array);
+        return new String(array, Charset.forName("UTF-8"));
     }
 
     private static void printDate() {

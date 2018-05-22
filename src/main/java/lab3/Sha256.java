@@ -1,23 +1,31 @@
 package lab3;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Sha256 {
 
     private static final Sha256 sha256Digest = new Sha256();
+
     /**
      * Returns the Digest.
+     * Based on singleton.
      *
      * @return The SHA256 digest.
      */
     public static Sha256 getInstance() {
         return sha256Digest;
     }
+
     /**
      * Private constructor to avoid initialization outside this class.
      */
     private Sha256() {
     }
+
     /**
      * Initial H values. These are the first 32
      * bits of the fractional parts of the square
@@ -33,6 +41,7 @@ public class Sha256 {
             0x1f83d9ab,
             0x5be0cd19
     };
+
     /**
      * Initial K values. These are the first 32
      * bits of the fractional parts of the cube root
@@ -56,14 +65,17 @@ public class Sha256 {
             0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
             0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
     };
+
     /**
      * Private reused array for representing a block of 64 bytes.
      */
     private final byte[] block = new byte[64];
+
     /**
      * Private reused array for representing 64 32 bit words.
      */
     private final int[] words = new int[64];
+
     /**
      * Method hashing the message according to the
      * SHA-256 specification.
@@ -91,6 +103,7 @@ public class Sha256 {
         }
         return hash;
     }
+
     /**
      * Sets up the words. The first 16 words are filled with
      * a copy of the 64 bytes currently being processed in the
@@ -142,6 +155,7 @@ public class Sha256 {
         registers[1] = registers[0];
         registers[0] = temp1 + temp2;
     }
+
     /**
      * Takes a byte array representing a message to be
      * hashed and pads it according to the SHA-256
@@ -170,6 +184,7 @@ public class Sha256 {
         System.arraycopy(pad, 0, output, length, pad.length);
         return output;
     }
+
     /**
      * Turns the provided integer into four bytes represented
      * as an array.
@@ -183,6 +198,59 @@ public class Sha256 {
             b[c] = (byte) ((i >>> (56 - 8 * c)) & 0xff);
         }
         return b;
+    }
+
+    public static void main(String[] args) {
+
+        byte[] array = new byte[54]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String input = new String(array, Charset.forName("UTF-8"));
+        System.out.println("generated:" + input);
+
+
+//        String input = "adfadsfasdfasdfafd";
+
+
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedhash = digest.digest(
+                    input.getBytes(StandardCharsets.UTF_8));
+            printByteArray(encodedhash);
+            System.out.println(bytesToHex(encodedhash));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        Sha256 sha256 = new Sha256();
+        printByteArray(sha256.digest(input.getBytes()));
+    }
+
+    /**
+     * Prints byte array.
+     *
+     * @param array array to print
+     */
+    public static void printByteArray(byte[] array) {
+        for (byte b : array) {
+            System.out.print(b + " ");
+        }
+        System.out.println();
+    }
+
+    /**
+     * Converts byte array to string in hex.
+     */
+    public static String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder();
+        for (int i = 0, n = hash.length; i < n; ++i) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if (hex.length() == 1)
+                hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 
 }

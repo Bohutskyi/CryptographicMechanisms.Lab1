@@ -2,9 +2,7 @@ package lab2.test.nist;
 
 import junit.framework.Assert;
 import lab2.IncorrectInputException;
-import net.stamfest.randomtests.Suite;
 import net.stamfest.randomtests.bits.ArrayBits;
-import net.stamfest.randomtests.bits.Bits;
 import net.stamfest.randomtests.nist.*;
 import org.junit.Test;
 

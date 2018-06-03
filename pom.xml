@@ -50,7 +50,9 @@
         <dependency>
             <groupId>net.stamfest</groupId>
             <artifactId>randomtests</artifactId>
-            <version>0.9-SNAPSHOT</version>
+            <version>0.9</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/extLibs/randomtests-0.9-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>

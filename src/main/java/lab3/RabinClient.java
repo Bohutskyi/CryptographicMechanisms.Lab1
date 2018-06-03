@@ -164,10 +164,10 @@ public class RabinClient {
 
     private static BigInteger[] sqrtByPrimeMod(BigInteger number, BigInteger p) {
         BigInteger k = p.add(BigInteger.ONE).divide(FOUR);
-            BigInteger[] result = new BigInteger[2];
-            result[0] = number.modPow(k ,p);
-            result[1] = result[0].negate();
-            return result;
+        BigInteger[] result = new BigInteger[2];
+        result[0] = number.modPow(k ,p);
+        result[1] = result[0].negate();
+        return result;
     }
 
     /**
@@ -311,11 +311,23 @@ public class RabinClient {
     }
 
     /**
+     * Blind Signature.
      *
+     * Calculates sqrt of message.
      *
+     * @param message message to sign
+     * @return array of message sqtrs
      * */
-    public void blindSign() {
+    public BigInteger[] blindSign(BigInteger message) {
+        BigInteger[] sqrtP = sqrtByPrimeMod(message, p),
+                sqrtQ = sqrtByPrimeMod(message, q);
+        BigInteger[] result = new BigInteger[4];
 
+        result[0] = (sqrtP[0].multiply(q).multiply(q.modInverse(p))).add(sqrtQ[0].multiply(p).multiply(p.modInverse(q))).mod(n);
+        result[1] = (sqrtP[0].multiply(q).multiply(q.modInverse(p))).add(sqrtQ[1].multiply(p).multiply(p.modInverse(q))).mod(n);
+        result[2] = (sqrtP[1].multiply(q).multiply(q.modInverse(p))).add(sqrtQ[0].multiply(p).multiply(p.modInverse(q))).mod(n);
+        result[3] = (sqrtP[1].multiply(q).multiply(q.modInverse(p))).add(sqrtQ[1].multiply(p).multiply(p.modInverse(q))).mod(n);
+        return result;
     }
 
     /**

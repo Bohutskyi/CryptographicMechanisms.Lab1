@@ -21,10 +21,26 @@ public class Test {
     private static final String DELIMITER = "=================================================================";
 
     public static void main(String[] args) {
-        RabinTest();
-        ShaTest();
-        signRabinTest();
-        blindSignRSATest();
+        if (args.length > 0) {
+            switch (args[0]) {
+                case "R": {
+                    RabinTest();
+                } break;
+                case "S": {
+                    ShaTest();
+                } break;
+                case "RS": {
+                    signRabinTest();
+                } break;
+                case "RSAB": {
+                    blindSignRSATest();
+                } break;
+                case "RB": {
+                    blindSignTest();
+                } break;
+                default: break;
+            }
+        }
     }
 
     //Test for Rabin system
@@ -68,8 +84,6 @@ public class Test {
         System.out.println(DELIMITER);
         printDate();
         System.out.println("Test for Sha256 was started.\n");
-
-        SecureRandom random = new SecureRandom();
         long
                 testCount = 0,
                 failures = 0;
@@ -135,6 +149,65 @@ public class Test {
         System.out.println("Test completed:\n" + testCount + " tests, " + failures + " (" + format.format((1. * failures / testCount)) + "%) failed.");
         System.out.println(DELIMITER);
     }
+
+    //Test for Blind Sign
+    private static void blindSignTest() {
+        printDate();
+        System.out.println("Test for blind sign was started.");
+        SecureRandom random = new SecureRandom();
+        long
+                testCount = 0,
+                failures = 0;
+
+        for (int i = 100; i <= 1000; i += 100) {
+            System.out.println(i);
+            for (int j = 0; j < 2; ++j) {
+                ++testCount;
+                RabinClient client = new RabinClient(i, random);
+                BigInteger message = generateMessage(client.getPublicKey(), i, random);
+                BigInteger[] resultToCheck = client.blindSign(message);
+                BigInteger blinder;
+                do {
+                    blinder = new BigInteger(15, random);
+                } while (blinder.gcd(client.getPublicKey()).compareTo(BigInteger.ONE) != 0);
+                message = message.multiply(blinder);
+                message = message.multiply(blinder);
+                message = message.mod(client.getPublicKey());
+                BigInteger[] blindSign = client.blindSign(message);
+                for (int k = 0; k < 4; ++k) {
+                    blindSign[k] = blindSign[k].multiply(blinder.modInverse(client.getPublicKey())).mod(client.getPublicKey());
+                }
+
+                if (!checkResult(blindSign, resultToCheck)) {
+                    ++failures;
+                    System.out.println("result:");
+                    for (BigInteger k: blindSign) {
+                        System.out.println(k.toString(16));
+                    }
+                    System.out.println("result to check:");
+                    for (BigInteger k: resultToCheck) {
+                        System.out.println(k.toString(16));
+                    }
+                }
+            }
+        }
+        printDate();
+        DecimalFormat format = new DecimalFormat("#.####");
+        format.setRoundingMode(RoundingMode.CEILING);
+        System.out.println("Test completed:\n" + testCount + " tests, " + failures + " (" + format.format((1. * failures / testCount)) + "%) failed.");
+        System.out.println(DELIMITER);
+    }
+
+    private static boolean checkResult(BigInteger[] result, BigInteger[] toCheck) {
+        for (BigInteger i : result) {
+            for (BigInteger j : toCheck) {
+                if (i.compareTo(j) == 0)
+                    return true;
+            }
+        }
+        return false;
+    }
+
 
     private static void blindSignRSATest() {
 

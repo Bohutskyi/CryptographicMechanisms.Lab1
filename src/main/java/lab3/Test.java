@@ -4,8 +4,11 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.security.interfaces.RSAPrivateCrtKey;
+import java.security.interfaces.RSAPublicKey;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -15,18 +18,21 @@ import java.util.Random;
 public class Test {
 
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
+    private static final String DELIMITER = "=================================================================";
 
     public static void main(String[] args) {
-//        RabinTest();
-//        ShaTest();
-        signTest();
+        RabinTest();
+        ShaTest();
+        signRabinTest();
+        blindSignRSATest();
     }
 
     //Test for Rabin system
     private static void RabinTest() {
+        System.out.println(DELIMITER);
         printDate();
-        System.out.println("Test for Rabin system was started.");
+        System.out.println("Test for Rabin system was started.\n");
+
         SecureRandom random = new SecureRandom();
         long
                 testCount = 0,
@@ -54,12 +60,15 @@ public class Test {
         DecimalFormat format = new DecimalFormat("#.####");
         format.setRoundingMode(RoundingMode.CEILING);
         System.out.println("Test completed:\n" + testCount + " tests, " + failures + " (" + format.format((1. * failures / testCount)) + "%) failed.");
+        System.out.println(DELIMITER);
     }
 
     //Test for Sha256
     private static void ShaTest() {
+        System.out.println(DELIMITER);
         printDate();
-        System.out.println("Test for Sha256 was started.");
+        System.out.println("Test for Sha256 was started.\n");
+
         SecureRandom random = new SecureRandom();
         long
                 testCount = 0,
@@ -90,12 +99,14 @@ public class Test {
         DecimalFormat format = new DecimalFormat("#.####");
         format.setRoundingMode(RoundingMode.CEILING);
         System.out.println("Test completed:\n" + testCount + " tests, " + failures + " (" + format.format((1. * failures / testCount)) + "%) failed.");
+        System.out.println(DELIMITER);
     }
 
-    //Test for Sign
-    private static void signTest() {
+    private static void signRabinTest() {
+        System.out.println(DELIMITER);
         printDate();
-        System.out.println("Test for sign was started.");
+        System.out.println("Test for Rabin sign was started.\n");
+
         SecureRandom random = new SecureRandom();
         long
                 testCount = 0,
@@ -122,7 +133,48 @@ public class Test {
         DecimalFormat format = new DecimalFormat("#.####");
         format.setRoundingMode(RoundingMode.CEILING);
         System.out.println("Test completed:\n" + testCount + " tests, " + failures + " (" + format.format((1. * failures / testCount)) + "%) failed.");
+        System.out.println(DELIMITER);
     }
+
+    private static void blindSignRSATest() {
+
+        System.out.println(DELIMITER);
+        System.out.println("Test for RSA blind sign was started.\n");
+
+        long start = System.currentTimeMillis();
+
+        RSAClient alice = new RSAClient();
+        RSAClient bob = new RSAClient();
+
+        // (N, e ,d),
+        KeyPair alicePair = alice.produceKeyPair();
+
+        RSAPrivateCrtKey alicePrivate = (RSAPrivateCrtKey) alicePair.getPrivate();
+        RSAPublicKey alicePublic = (RSAPublicKey) alicePair.getPublic();
+        BigInteger N = alicePublic.getModulus();
+
+        // mu = H(msg) * r^e mod N
+        String publicMessage = "THE MAGIC WORDS ARE SQUEAMISH OSSIFRAGE";
+        BigInteger mu = bob.calculateMu(alicePublic, publicMessage);
+
+        // muPrime = mu' = (m1*Q*QInverseModP + m2*P*PInverseModQ) mod N
+        BigInteger muPrime = alice.calculateMuPrimeWithChineseRemainderTheorem(mu, alicePrivate, N);
+
+        // sign = mu'*r^-1 mod N
+        String sig = bob.signatureCalculation(muPrime, N);
+        System.out.println("Signature produced with Blind RSA procedure for message \"" +
+                publicMessage +  "\"\nis: \n" + sig);
+
+        // Bob is checking if the signature he got from Alice is valid, that
+        // can be easily computed because (m^d)^e modN = m
+        bob.verify(sig,alicePublic);
+
+        System.out.println();
+        long elapsedTimeMillis = System.currentTimeMillis() - start;
+        System.out.println("Program executed in " + elapsedTimeMillis + " milliseconds");
+        System.out.println(DELIMITER);
+    }
+
 
     private static BigInteger generateMessage(BigInteger n, int bitsNumber, Random random) {
         BigInteger result;

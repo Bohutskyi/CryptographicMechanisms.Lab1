@@ -345,24 +345,4 @@ public class RabinClient {
         return result.toString();
     }
 
-    public static void main(String[] args) {
-        Random random = new Random();
-        int count = 0;
-
-        do {
-            ++count;
-            RabinClient client = new RabinClient(512, random);
-
-            BigInteger message = new BigInteger("329041902348920", 16);
-            Object[] sign = client.sign(message, 54, random);
-            RabinClient client2 = new RabinClient(123, random);
-            try {
-                System.out.println(client2.checkSign(sign, client));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        } while (count <= 20);
-
-    }
-
 }

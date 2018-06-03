@@ -200,33 +200,6 @@ public class Sha256 {
         return b;
     }
 
-    public static void main(String[] args) {
-
-        byte[] array = new byte[54]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String input = new String(array, Charset.forName("UTF-8"));
-        System.out.println("generated:" + input);
-
-
-//        String input = "adfadsfasdfasdfafd";
-
-
-
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] encodedhash = digest.digest(
-                    input.getBytes(StandardCharsets.UTF_8));
-            printByteArray(encodedhash);
-            System.out.println(bytesToHex(encodedhash));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-
-        Sha256 sha256 = new Sha256();
-        printByteArray(sha256.digest(input.getBytes()));
-    }
-
     /**
      * Prints byte array.
      *

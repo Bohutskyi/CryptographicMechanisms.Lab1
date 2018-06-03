@@ -20,25 +20,43 @@ public class Test {
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final String DELIMITER = "=================================================================";
 
+    /**
+     * Send list of parameters to run appropriate test:
+     * R - for Rabin system
+     * S - for Sha
+     * RS - for Rabin signature
+     * RSAB - for RSA blind signature
+     * RB - for Rabin blind signature
+     *
+     * Note: by default args = ["RB"].
+     * */
     public static void main(String[] args) {
         if (args.length > 0) {
-            switch (args[0]) {
-                case "R": {
-                    RabinTest();
-                } break;
-                case "S": {
-                    ShaTest();
-                } break;
-                case "RS": {
-                    signRabinTest();
-                } break;
-                case "RSAB": {
-                    blindSignRSATest();
-                } break;
-                case "RB": {
-                    blindSignTest();
-                } break;
-                default: break;
+            for (String s : args) {
+                switch (s) {
+                    case "R": {
+                        RabinTest();
+                    }
+                    break;
+                    case "S": {
+                        ShaTest();
+                    }
+                    break;
+                    case "RS": {
+                        signRabinTest();
+                    }
+                    break;
+                    case "RSAB": {
+                        blindSignRSATest();
+                    }
+                    break;
+                    case "RB": {
+                        blindSignTest();
+                    }
+                    break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -151,6 +169,14 @@ public class Test {
     }
 
     //Test for Blind Sign
+    /**
+     * User has message. He also generates blind multiplier.
+     * Than calculates m = message * multiplier^2 and sends for sign.
+     * Another user signs m and sends sqrt(m) back.
+     * User receives sqrt(message) * multiplier^1. Than user multiplies result on inverse m by mod n. And gets signed
+     * message.
+     * This scenario runs for different messages and Rabin clients on different keys length.
+     * */
     private static void blindSignTest() {
         printDate();
         System.out.println("Test for blind sign was started.");
@@ -163,21 +189,35 @@ public class Test {
             System.out.println(i);
             for (int j = 0; j < 2; ++j) {
                 ++testCount;
+                //Create new Rabin client
                 RabinClient client = new RabinClient(i, random);
+
+                //Generate new message
                 BigInteger message = generateMessage(client.getPublicKey(), i, random);
+
+                //Get sqrt(message) for checking blind signature
                 BigInteger[] resultToCheck = client.blindSign(message);
+
+                //Generate blind multiplier
                 BigInteger blinder;
                 do {
                     blinder = new BigInteger(15, random);
                 } while (blinder.gcd(client.getPublicKey()).compareTo(BigInteger.ONE) != 0);
+
+                //message = message * blind ^ 2
                 message = message.multiply(blinder);
                 message = message.multiply(blinder);
                 message = message.mod(client.getPublicKey());
+
+                //Send message for blind sign
                 BigInteger[] blindSign = client.blindSign(message);
+
+                //Multiply each result on inverse by mod n
                 for (int k = 0; k < 4; ++k) {
                     blindSign[k] = blindSign[k].multiply(blinder.modInverse(client.getPublicKey())).mod(client.getPublicKey());
                 }
 
+                //Check results
                 if (!checkResult(blindSign, resultToCheck)) {
                     ++failures;
                     System.out.println("result:");
